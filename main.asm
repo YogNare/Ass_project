@@ -28,16 +28,40 @@ main>
 
     ldi r0, vivod
     ld r0, r0
-    ldi r1, 0xe2
-    ldi r2, 0x99
-    ldi r3, 0xa5
-    st r0, r1
-    st r0, r2
-    st r0, r3
-    
+    jsr print_card_tmplt
+    jsr between_cards
+    jsr print_card_tmplt
 
+    
     halt
 
+
+between_cards>
+    push r1
+    push r0
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    ldi r1, 0x34
+    st r0, r1
+    ldi r1, 0x41
+    st r0, r1
+
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    ldi r1, 0x31
+    st r0, r1
+    ldi r1, 0x30
+    st r0, r1
+    ldi r1, 0x43
+    st r0, r1
+    pop r0
+    pop r1
+
+    rts
 
 clear_terminal>
 
@@ -61,6 +85,75 @@ clear_terminal>
 
     rts
 
+print_card_tmplt>
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+    push r5
+    push r6
+    push r7
 
+    ldi r1, 5 #tmplt len
+    ldi r2, card_template
+
+    while
+        tst r1
+    stays ne
+        ld r2, r3
+        inc r2
+        ld r2, r4
+        inc r2
+        ld r2, r5
+        inc r2
+        ld r2, r6
+        inc r2
+        ld r2, r7
+        inc r2
+        st r0, r3
+        st r0, r4
+        st r0, r5
+        st r0, r6
+        st r0, r7
+
+        #bellow is movement 5<- and 1v
+        push r2
+        if 
+            ldi r3, 1
+            cmp r1, r3
+        is ne
+            ldi r2, 0x1b
+            ldi r3, 0x5b
+            ldi r4, 0x35
+            ldi r5, 0x44
+            ldi r6, 0x1b
+            ldi r7, 0x5b
+            st r0, r2
+            ldi r2, 0x42
+            
+            st r0, r3
+            st r0, r4
+            st r0, r5
+            st r0, r6
+            st r0, r7
+            st r0, r2
+        fi
+        pop r2
+
+        dec r1
+    wend
+
+    pop r7
+    pop r6
+    pop r5
+    pop r6
+    pop r3
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+card_template: dc "-----|m  || j ||   |-----"
 coloda: dc 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 end.
