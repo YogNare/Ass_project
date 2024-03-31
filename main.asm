@@ -34,6 +34,7 @@ main>
     st r0, r1
     st r0, r2
     st r0, r3
+    
 
     halt
 
