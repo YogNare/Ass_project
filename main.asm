@@ -28,16 +28,12 @@ main>
 
     ldi r0, vivod
     ld r0, r0
-    ldi r1, 0x48
+    ldi r1, 0xe2
+    ldi r2, 0x99
+    ldi r3, 0xa5
     st r0, r1
-
-    ldi r3, rd
-    ld r3, r3
-    ldi r1, 1
-    st r3, r1
-
-    ldi r1, 0x48
-    st r0, r1
+    st r0, r2
+    st r0, r3
 
     halt
 
