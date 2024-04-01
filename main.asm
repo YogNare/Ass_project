@@ -28,25 +28,6 @@ main>
 
     ldi r0, vivod
     ld r0, r0
-    jsr print_card_tmplt
-    jsr between_cards
-    jsr print_card_tmplt
-
-    
-    halt
-
-
-between_cards>
-    push r1
-    push r0
-    ldi r1, 0x1b
-    st r0, r1
-    ldi r1, 0x5b
-    st r0, r1
-    ldi r1, 0x34
-    st r0, r1
-    ldi r1, 0x41
-    st r0, r1
 
     ldi r1, 0x1b
     st r0, r1
@@ -54,14 +35,100 @@ between_cards>
     st r0, r1
     ldi r1, 0x31
     st r0, r1
-    ldi r1, 0x30
+    ldi r1, 0x48
+    st r0, r1
+
+    clr r1
+    ldi r1, 0x35 # 5
+    jsr down_x_r1
+
+    clr r1
+    ldi r1, 0x37 # 7
+    jsr right_x_r1
+
+    jsr print_card_tmplt
+    ldi r1, 0x34
+    jsr up_x_r1
+    ldi r1, 0x37
+    jsr right_x_r1
+    jsr print_card_tmplt
+
+    ldi r1, 0x39
+    jsr left_x_r1
+    ldi r1, 0x35
+    jsr down_x_r1
+
+    jsr print_card_tmplt
+    ldi r1, 0x34
+    jsr up_x_r1
+    ldi r1, 0x37
+    jsr right_x_r1
+    jsr print_card_tmplt
+
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    ldi r1, 0x32
+    st r0, r1
+    ldi r1, 0x33
+    st r0, r1
+    ldi r1, 0x48
+    st r0, r1
+
+    jsr print_text
+
+    halt
+
+down_x_r1>
+    push r1
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    pop r1
+    st r0, r1
+    ldi r1, 0x42
+    st r0, r1
+    rts
+
+up_x_r1>
+    push r1
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    pop r1
+    st r0, r1
+    ldi r1, 0x41
+    st r0, r1
+    rts
+
+left_x_r1>
+    push r1
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    pop r1
+    st r0, r1
+    ldi r1, 0x44
+    st r0, r1
+    rts
+
+right_x_r1>
+    push r1
+    ldi r1, 0x1b
+    st r0, r1
+    ldi r1, 0x5b
+    st r0, r1
+    pop r1
     st r0, r1
     ldi r1, 0x43
     st r0, r1
-    pop r0
-    pop r1
-
     rts
+
+
 
 clear_terminal>
 
@@ -117,29 +184,22 @@ print_card_tmplt>
         st r0, r6
         st r0, r7
 
-        #bellow is movement 5<- and 1v
-        push r2
+        #bellow is movement 5<- and 1v 
+        #movement on the next line
         if 
             ldi r3, 1
             cmp r1, r3
         is ne
-            ldi r2, 0x1b
-            ldi r3, 0x5b
-            ldi r4, 0x35
-            ldi r5, 0x44
-            ldi r6, 0x1b
-            ldi r7, 0x5b
-            st r0, r2
-            ldi r2, 0x42
-            
-            st r0, r3
-            st r0, r4
-            st r0, r5
-            st r0, r6
-            st r0, r7
-            st r0, r2
+            push r1
+            clr r1
+            ldi r1, 0x35
+            jsr left_x_r1
+
+            clr r1
+            ldi r1, 0x31
+            jsr down_x_r1
+            pop r1
         fi
-        pop r2
 
         dec r1
     wend
@@ -154,6 +214,39 @@ print_card_tmplt>
     pop r0
     rts
 
+print_text>
+    push r0
+    push r1
+    push r2
+    push r3
+    push r4
+        ldi r2, 6
+        ldi r1, printable_text
+        while
+            tst r2
+        stays ne
+            dec r2
+            push r2
+            ld r1, r2
+            inc r1
+            ld r1, r3
+            inc r1
+            ld r1, r4
+            inc r1
+            st r0, r2
+            st r0, r3
+            st r0, r4
+            pop r2
+        wend
+
+    pop r4
+    pop r3
+    pop r2
+    pop r1
+    pop r0
+    rts
+
+printable_text: dc "Enter your answer:"
 card_template: dc "-----|m  || j ||   |-----"
 coloda: dc 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 end.
