@@ -22,10 +22,43 @@ default_handler>
 
 # Main program section
 rsect main
-rd: dc 0xfff1
-vivod: dc 0xfff0
-main>
 
+rd: dc 0xffe1
+vivod: dc 0xffe0
+start_card: dc 0xffc0
+main>
+    ldi r1, start_card
+    ld r1, r1
+    ldi r2, 8
+    st r1, r2
+    inc r1
+    ldi r2, 9
+    st r1, r2
+    inc r1
+    ldi r2, 10
+    st r1, r2
+    inc r1
+    ldi r2, 12
+    st r1, r2
+    inc r1
+    #jsr print_interface
+
+    ldi r0, rd
+    ld r0, r0
+    ldi r1, 1
+    st r0, r1
+
+    ldi r0, vivod
+    ld r0, r0
+    ldi r1, 0xffe3
+    ld r1, r1
+    st r0, r1
+
+    
+
+    halt
+
+print_interface>
     ldi r0, vivod
     ld r0, r0
 
@@ -46,11 +79,15 @@ main>
     ldi r1, 0x37 # 7
     jsr right_x_r1
 
+    ldi r1, start_card #начальный наминал карты
     jsr print_card_tmplt
+
     ldi r1, 0x34
     jsr up_x_r1
     ldi r1, 0x37
     jsr right_x_r1
+
+    ldi r1, start_card
     jsr print_card_tmplt
 
     ldi r1, 0x39
@@ -58,11 +95,15 @@ main>
     ldi r1, 0x35
     jsr down_x_r1
 
+    ldi r1, start_card
     jsr print_card_tmplt
+
     ldi r1, 0x34
     jsr up_x_r1
     ldi r1, 0x37
     jsr right_x_r1
+
+    ldi r1, start_card
     jsr print_card_tmplt
 
     ldi r1, 0x1b
@@ -77,8 +118,7 @@ main>
     st r0, r1
 
     jsr print_text
-
-    halt
+    rts
 
 down_x_r1>
     push r1
@@ -154,33 +194,81 @@ clear_terminal>
 
 print_card_tmplt>
     push r0
-    push r1
     push r2
     push r3
     push r4
     push r5
     push r6
     push r7
+    push r1
+
 
     ldi r1, 5 #tmplt len
     ldi r2, card_template
-
+    
     while
         tst r1
     stays ne
-        ld r2, r3
+        ldb r2, r3
         inc r2
-        ld r2, r4
+        ldb r2, r4
         inc r2
-        ld r2, r5
+        ldb r2, r5
         inc r2
-        ld r2, r6
+        ldb r2, r6
         inc r2
-        ld r2, r7
+        ldb r2, r7
         inc r2
+
         st r0, r3
-        st r0, r4
-        st r0, r5
+        if
+            ldi r0, 0x6d
+            cmp r0, r4
+        is eq
+            move r1, r3
+            pop r1
+            push r1
+            ld r1, r1
+            ldi r4, num
+            ldb r1, r0
+            add r0, r4
+            ldb r4, r4
+            ldi r0, vivod
+            ld r0, r0
+            st r0, r4
+            move r3, r1
+        else
+            ldi r0, vivod
+            ld r0, r0
+            st r0, r4
+        fi
+
+        if
+            ldi r0, 0x6a
+            cmp r0, r5
+        is eq
+            move r1, r3
+            pop r1
+            push r1
+            ld r1, r1
+            ldi r5, mas
+            ldb r1, r0
+            inc r1
+            
+            add r0, r5
+            ldb r5, r5
+            ldi r0, vivod
+            ld r0, r0
+            st r0, r5
+            ldi r4, start_card
+            st r4, r1
+            move r3, r1
+
+        else
+            ldi r0, vivod
+            ld r0, r0
+            st r0, r5
+        fi
         st r0, r6
         st r0, r7
 
@@ -204,13 +292,13 @@ print_card_tmplt>
         dec r1
     wend
 
+    pop r1
     pop r7
     pop r6
     pop r5
     pop r6
     pop r3
     pop r2
-    pop r1
     pop r0
     rts
 
@@ -248,5 +336,7 @@ print_text>
 
 printable_text: dc "Enter your answer:"
 card_template: dc "-----|m  || j ||   |-----"
-coloda: dc 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+
+num: dc "6789XJQKA", "6789XJQKA", "6789XJQKA", "6789XJQKA" #X - 10
+mas: dc "ddddddddd", "hhhhhhhhh", "sssssssss", "ccccccccc"
 end.
