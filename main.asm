@@ -26,6 +26,20 @@ rsect main
 rd: dc 0xffe1
 vivod: dc 0xffe0
 start_card: dc 0xffc0
+command: dc 0xffe2
+
+card_table_1: dc 0xffc0
+card_table_2: dc 0xffc1
+card_table_3: dc 0xffc2
+card_table_4: dc 0xffc5
+card_table_5: dc 0xffc6
+
+card_hand_1: dc 0xffc3
+card_hand_2: dc 0xffc4
+
+card_ai_1: dc 0xffc7
+card_ai_2: dc 0xffc8
+
 main>
     ldi r1, start_card
     ld r1, r1
@@ -41,18 +55,19 @@ main>
     ldi r2, 12
     st r1, r2
     inc r1
-    #jsr print_interface
+    ldi r2, 30
+    st r1, r2
+    inc r1
 
-    ldi r0, rd
+    #jsr print_interface #вывод начального интерфейса
+
+    ldi r0, rd 
     ld r0, r0
     ldi r1, 1
-    st r0, r1
+    st r0, r1 #переелючение на запись
 
-    ldi r0, vivod
-    ld r0, r0
-    ldi r1, 0xffe3
-    ld r1, r1
-    st r0, r1
+
+    #1 ход - вводится бет и число
 
     
 
@@ -80,7 +95,7 @@ print_interface>
     jsr right_x_r1
 
     ldi r1, start_card #начальный наминал карты
-    jsr print_card_tmplt
+    jsr print_card_tmplt #1 карта на столе
 
     ldi r1, 0x34
     jsr up_x_r1
@@ -88,7 +103,16 @@ print_interface>
     jsr right_x_r1
 
     ldi r1, start_card
-    jsr print_card_tmplt
+    jsr print_card_tmplt #2 карта на столе
+    
+    ldi r1, 0x34
+    jsr up_x_r1
+    ldi r1, 0x37
+    jsr right_x_r1
+
+    ldi r1, start_card
+    jsr print_card_tmplt #3 карта на столе
+
 
     ldi r1, 0x39
     jsr left_x_r1
