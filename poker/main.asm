@@ -28,6 +28,7 @@ vivod: dc 0xffe0
 start_card: dc 0xffc0
 command: dc 0xffe2
 
+
 card_table_1: dc 0xffc0
 card_table_2: dc 0xffc1
 card_table_3: dc 0xffc2
@@ -59,7 +60,7 @@ main>
     st r1, r2
     inc r1
 
-    #jsr print_interface #вывод начального интерфейса
+    jsr print_interface #вывод начального интерфейса
 
     ldi r0, rd 
     ld r0, r0
@@ -76,72 +77,12 @@ main>
 print_interface>
     ldi r0, vivod
     ld r0, r0
-
-    ldi r1, 0x1b
+    ldi r1, 0xffdf
+    ldi r2, 89
+    st r1, r2
+    ldi r1, card_template
+    ld r1, r2
     st r0, r1
-    ldi r1, 0x5b
-    st r0, r1
-    ldi r1, 0x31
-    st r0, r1
-    ldi r1, 0x48
-    st r0, r1
-
-    clr r1
-    ldi r1, 0x35 # 5
-    jsr down_x_r1
-
-    clr r1
-    ldi r1, 0x37 # 7
-    jsr right_x_r1
-
-    ldi r1, start_card #начальный наминал карты
-    jsr print_card_tmplt #1 карта на столе
-
-    ldi r1, 0x34
-    jsr up_x_r1
-    ldi r1, 0x37
-    jsr right_x_r1
-
-    ldi r1, start_card
-    jsr print_card_tmplt #2 карта на столе
-    
-    ldi r1, 0x34
-    jsr up_x_r1
-    ldi r1, 0x37
-    jsr right_x_r1
-
-    ldi r1, start_card
-    jsr print_card_tmplt #3 карта на столе
-
-
-    ldi r1, 0x39
-    jsr left_x_r1
-    ldi r1, 0x35
-    jsr down_x_r1
-
-    ldi r1, start_card
-    jsr print_card_tmplt
-
-    ldi r1, 0x34
-    jsr up_x_r1
-    ldi r1, 0x37
-    jsr right_x_r1
-
-    ldi r1, start_card
-    jsr print_card_tmplt
-
-    ldi r1, 0x1b
-    st r0, r1
-    ldi r1, 0x5b
-    st r0, r1
-    ldi r1, 0x32
-    st r0, r1
-    ldi r1, 0x33
-    st r0, r1
-    ldi r1, 0x48
-    st r0, r1
-
-    jsr print_text
     rts
 
 down_x_r1>
@@ -359,7 +300,7 @@ print_text>
     rts
 
 printable_text: dc "Enter your answer:"
-card_template: dc "-----|m  || j ||   |-----"
+card_template: dc "-----", 0x1b, 0x5b, 0x31, 0x42, 0x1b, 0x5b, 0x35, 0x44 ,"|m  |",0x1b, 0x5b, 0x31, 0x42, 0x1b, 0x5b, 0x35, 0x44 ,"| j |",0x1b, 0x5b, 0x31, 0x42, 0x1b, 0x5b, 0x35, 0x44,"|   |",0x1b, 0x5b, 0x31, 0x42, 0x1b, 0x5b, 0x35, 0x44 ,"-----"
 
 num: dc "6789XJQKA", "6789XJQKA", "6789XJQKA", "6789XJQKA" #X - 10
 mas: dc "ddddddddd", "hhhhhhhhh", "sssssssss", "ccccccccc"
