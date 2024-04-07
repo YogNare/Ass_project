@@ -23,23 +23,18 @@ default_handler>
 # Main program section
 rsect main
 
-x_ball: dc 0xff00
-y_ball: dc 0xff01
-vx: dc 0xff02
-vy: dc 0xff03
-y_r_bat: dc 0xff04
 
-assect 0x90
+asect 0xff00
+x_ball: dc 0b01111111
+y_ball: dc 0b01111111
+vx: dc 0xff
+vy: dc 2
+y_r_bat: dc 1
+
+asect 0x90
 
 main>
-    ldi r0, 2
-    ldi r1, vx
-    ld r1, r1
-    st r1, r2
-    ldi r0, 1
-    ldi r1, vy
-    ld r1, r1
-    st r1, r2
+
 
 
     halt
