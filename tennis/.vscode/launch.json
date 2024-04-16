@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Debug CdM-8 with Von Neumann architecture",
+            "type": "cdm",
+            "request": "launch",
+            "address": "ws://localhost:7001",
+            "architecture": "vonNeumann",
+            "target": "cdm8",
+            "artifacts": {
+                "image": "${workspaceFolder}/build/out.img",
+                "debug": "${workspaceFolder}/build/out.dbg.json"
+            }
+        },
+    {
+        "name": "Debug CdM-16 with Von Neumann architecture",
+        "type": "cdm",
+        "request": "launch",
+        "address": "ws://localhost:7001",
+        "architecture": "vonNeumann",
+        "target": "cdm16",
+        "artifacts": {
+            "image": "${workspaceFolder}/build/out.img",
+            "debug": "${workspaceFolder}/build/out.dbg.json"
+        }
+    }
+    ]
+}
