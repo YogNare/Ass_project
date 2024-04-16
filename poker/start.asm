@@ -6,12 +6,21 @@ jsr main
 halt
 
 
-asect 0xf000
+asect 0xfc00
 RD_WR> 
 #0 - pc is working
 #1 - cp is stopped and nothing
 #2 - cp is stopped and give us random value
 dc 0
+
+WHO_WIN>
+ds 2
+
+COMB1>
+ds 16
+
+COMB2>
+ds 16
 
 #10 random cards
 asect 0xfe00
