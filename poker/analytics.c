@@ -16,58 +16,65 @@ void analysis() {
     int res1[13], res2[13], flags[2] = { 0, 0 }; // res - массивы для хранения количества карт каждого достоинства
     int flash[2] = { 0, 0 }; // для обнаружения флеша в комбинации
 
-    for (int i = 0; i < 13; i++) {
-        res1[i] = 0;
-        res2[i] = 0;
-    }
-
     for (int i = 0; i < 5; i++) {
         if (hand1.cards[i].value >= '2' && hand1.cards[i].value <= '9') {
             res1[hand1.cards[i].value - '2']++;
+            continue;
         }
 
         if (hand1.cards[i].value == 'T') {
             res1[8]++;
+            continue;
         }
 
         if (hand1.cards[i].value == 'J') {
             res1[9]++;
+            continue;
         }
 
         if (hand1.cards[i].value == 'Q') {
             res1[10]++;
+            continue;
         }
 
         if (hand1.cards[i].value == 'K') {
             res1[11]++;
+            continue;
         }
 
         if (hand1.cards[i].value == 'A') {
             res1[12]++;
+            continue;
         }
 
         if (hand2.cards[i].value >= '2' && hand2.cards[i].value <= '9') {
             res2[hand2.cards[i].value - '2']++;
+            continue;
         }
 
         if (hand2.cards[i].value == 'T') {
             res2[8]++;
+            continue;
         }
 
         if (hand2.cards[i].value == 'J') {
             res2[9]++;
+            continue;
         }
 
         if (hand2.cards[i].value == 'Q') {
             res2[10]++;
+            continue;
         }
 
         if (hand2.cards[i].value == 'K') {
             res2[11]++;
+            continue;
         }
 
         if (hand2.cards[i].value == 'A') {
             res2[12]++;
+            continue;
         }
     }
 
@@ -80,6 +87,8 @@ void analysis() {
     }
     
     for (int i = 0; i < 13; i++) {
+        res1[i] = 0, res2[i] = 0;
+        
         if (res1[i] == 1) {
             if (res1[i + 1] == 1 && res1[i + 2] == 1 && res1[i + 3] == 1 && res1[i + 4] == 1) { // если стрит
                 if (flash[0] == 1) {
@@ -100,10 +109,8 @@ void analysis() {
                 }
             }
 
-            else {
-                if (flash[0] == 1) { // просто флеш
-                    COMB1 = 5;
-                }
+            else if (flash[0] == 1) { // просто флеш
+                COMB1 = 5;
             }
         }
 
@@ -172,10 +179,8 @@ void analysis() {
                 }
             }
 
-            else {
-                if (flash[1] == 1) {
-                    COMB2 = 5;
-                }
+            else if (flash[1] == 1) {
+                COMB2 = 5;
             }
         }
 
