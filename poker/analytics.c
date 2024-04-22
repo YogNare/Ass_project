@@ -165,6 +165,7 @@ void analysis() {
 
         if (res1[i] == 4) { // каре
             COMB1 = 7;
+            break;
         }
 
         if (res1[i] == 2) {
@@ -236,6 +237,7 @@ void analysis() {
 
         if (res2[i] == 4) {
             COMB2 = 7;
+            break;
         }
 
         if (res2[i] == 2) {
