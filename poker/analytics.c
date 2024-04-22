@@ -22,36 +22,8 @@ void analysis() {
     }
 
     for (int i = 0; i < 5; i++) {
-        if (hand1.cards[i].value == '2') {
-            res1[0]++;
-        }
-
-        if (hand1.cards[i].value == '3') {
-            res1[1]++;
-        }
-
-        if (hand1.cards[i].value == '4') {
-            res1[2]++;
-        }
-
-        if (hand1.cards[i].value == '5') {
-            res1[3]++;
-        }
-
-        if (hand1.cards[i].value == '6') {
-            res1[4]++;
-        }
-
-        if (hand1.cards[i].value == '7') {
-            res1[5]++;
-        }
-
-        if (hand1.cards[i].value == '8') {
-            res1[6]++;
-        }
-
-        if (hand1.cards[i].value == '9') {
-            res1[7]++;
+        if (hand1.cards[i].value >= '2' && hand1.cards[i].value <= '9') {
+            res1[hand1.cards[i].value - '2']++;
         }
 
         if (hand1.cards[i].value == 'T') {
@@ -74,36 +46,8 @@ void analysis() {
             res1[12]++;
         }
 
-        if (hand2.cards[i].value == '2') {
-            res2[0]++;
-        }
-
-        if (hand2.cards[i].value == '3') {
-            res2[1]++;
-        }
-
-        if (hand2.cards[i].value == '4') {
-            res2[2]++;
-        }
-
-        if (hand2.cards[i].value == '5') {
-            res2[3]++;
-        }
-
-        if (hand2.cards[i].value == '6') {
-            res2[4]++;
-        }
-
-        if (hand2.cards[i].value == '7') {
-            res2[5]++;
-        }
-
-        if (hand2.cards[i].value == '8') {
-            res2[6]++;
-        }
-
-        if (hand2.cards[i].value == '9') {
-            res2[7]++;
+        if (hand2.cards[i].value >= '2' && hand2.cards[i].value <= '9') {
+            res2[hand2.cards[i].value - '2']++;
         }
 
         if (hand2.cards[i].value == 'T') {
