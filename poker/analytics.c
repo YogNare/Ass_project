@@ -13,7 +13,7 @@ extern volatile int COMB1, COMB2, WHO_WIN;
 void analysis() {
     COMB1 = 0, COMB2 = 0;
 
-    int res1[13], res2[13], flags[2] = { 0, 0 }; // res - массивы для хранения количества карт каждого достоинства
+    int res1[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, res2[13] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, flags[2] = { 0, 0 }; // res - массивы для хранения количества карт каждого достоинства
     int flash[2] = { 0, 0 }; // для обнаружения флеша в комбинации
 
     for (int i = 0; i < 5; i++) {
@@ -46,7 +46,9 @@ void analysis() {
             res1[12]++;
             continue;
         }
-
+    }
+        
+    for (int i = 0; i < 5; i++) {
         if (hand2.cards[i].value >= '2' && hand2.cards[i].value <= '9') {
             res2[hand2.cards[i].value - '2']++;
             continue;
@@ -87,8 +89,6 @@ void analysis() {
     }
     
     for (int i = 0; i < 13; i++) {
-        res1[i] = 0, res2[i] = 0;
-        
         if (res1[i] == 1) {
             if (res1[i + 1] == 1 && res1[i + 2] == 1 && res1[i + 3] == 1 && res1[i + 4] == 1) { // если стрит
                 if (flash[0] == 1) {
