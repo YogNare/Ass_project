@@ -181,9 +181,9 @@ class TextEditorApp(QMainWindow):
                     num = 0
                 else:
                     num *= 10
-                    num += int(num)
+                    num += int(symbol)
 
-        string_len = len(out_string[:-2])
+        string_len = out_string[:-2].count('x')
         self.read_only_text_box.setPlainText(f"{string_len}({string_len * 2}) - {out_string[:-2]}")
 
 
