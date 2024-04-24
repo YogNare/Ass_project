@@ -111,10 +111,10 @@ class TextEditorApp(QMainWindow):
                 string_flag = 0
                 continue
 
-            if symbol in ('\n', ' '):
+            if symbol in ('\n', ' ') and string_flag == 0:
                 continue
 
-            if symbol == '~':
+            if symbol == '~' and string_flag == 0:
                 out_string += "0x1b, 0x5b, 0x48, "
                 num = 0
 
