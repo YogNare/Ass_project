@@ -121,6 +121,7 @@ class TextEditorApp(QMainWindow):
             elif symbol in ('♠', '♣', '♥', '♦'):
                 string = str('♠'.encode("utf-8")).replace("\\", ", 0")
                 out_string += string[4:-1] + ', '
+                num = 0
             
             elif symbol == '↑':
                 if num == 0:
