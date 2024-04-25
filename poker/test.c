@@ -1,4 +1,4 @@
-int arr[2];
+
 
 int main()
 {
