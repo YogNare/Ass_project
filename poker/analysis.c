@@ -280,12 +280,12 @@ void analysis() {
             }
 
             else {
-                if (res1[i] == 1 && res2[i] == 0) {
+                if (res1[i] > 0 && res2[i] == 0) {
                     WHO_WIN = 1;
                     return;
                 }
 
-                if (res2[i] == 1 && res1[i] == 0) {
+                if (res2[i] > 0 && res1[i] == 0) {
                     WHO_WIN = 2;
                     return;
                 }
