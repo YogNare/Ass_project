@@ -1657,18 +1657,30 @@ __LBB4_48:
 	ldi	r0, 114
 	stw	r1, r0
 	ldi	r0, BID_BOT
-	ldw	r0, r2
-	ldi	r1, BALANCE_PLAYER
-	ldw	r1, r0
-	add r0, r2, r0
-	stw	r1, r0
+	ldw	r0, r4
+	ldi	r3, BALANCE_PLAYER
+	ldw	r3, r0
+	add r0, r4, r0
+	stw	r3, r0
 	ldi	r0, BID_PLAYER
-	ldw	r0, r2
-	ldw	r1, r0
-	add r0, r2, r0
+	ldw	r0, r4
+	ldw	r3, r0
+	add r0, r4, r0
+	stw	r3, r0
+	ldi	r0, -12288
+	stw	r2, r0
+	ldi	r0, 76
 	stw	r1, r0
-	ldi	r1, RD_WR
+	ldi	r3, RD_WR
 	ldi	r0, 1
+	stw	r3, r0
+	ldi	r0, -11776
+	stw	r2, r0
+	ldi	r0, 122
+	stw	r1, r0
+	ldi	r0, -11520
+	stw	r2, r0
+	ldi	r0, 440
 	stw	r1, r0
 	br	__LBB4_53
 __LBB4_49:
@@ -1703,18 +1715,30 @@ __LBB4_51:
 	ldi	r0, 114
 	stw	r1, r0
 	ldi	r0, BID_BOT
-	ldw	r0, r2
-	ldi	r1, BALANCE_BOT
-	ldw	r1, r0
-	add r0, r2, r0
-	stw	r1, r0
+	ldw	r0, r4
+	ldi	r3, BALANCE_BOT
+	ldw	r3, r0
+	add r0, r4, r0
+	stw	r3, r0
 	ldi	r0, BID_PLAYER
-	ldw	r0, r2
-	ldw	r1, r0
-	add r0, r2, r0
+	ldw	r0, r4
+	ldw	r3, r0
+	add r0, r4, r0
+	stw	r3, r0
+	ldi	r0, -12032
+	stw	r2, r0
+	ldi	r0, 84
 	stw	r1, r0
-	ldi	r1, RD_WR
+	ldi	r3, RD_WR
 	ldi	r0, 1
+	stw	r3, r0
+	ldi	r0, -11776
+	stw	r2, r0
+	ldi	r0, 122
+	stw	r1, r0
+	ldi	r0, -11520
+	stw	r2, r0
+	ldi	r0, 440
 	stw	r1, r0
 	br	__LBB4_52
 __LBB4_52:
@@ -2078,11 +2102,10 @@ main>                                   # -- Begin function main
 	br	__LBB7_1
 __LBB7_1:                               # =>This Loop Header: Depth=1
                                         #     Child Loop BB7_3 Depth 2
-                                        #     Child Loop BB7_7 Depth 2
 	lsw	r0, -4
 	ldi	r1, 2
 	cmp	r0, r1
-	bgt	__LBB7_12
+	bgt	__LBB7_8
 	br	__LBB7_2
 __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r1, BID_BOT
@@ -2103,9 +2126,9 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	stw	r1, r0
 	jsr	generate_cards
 	ldi	r1, hand_iteration
-	ssw	r1, -18                         # 2-byte Folded Spill
+	ssw	r1, -14                         # 2-byte Folded Spill
 	ldi	r0, 0
-	ssw	r0, -14                         # 2-byte Folded Spill
+	ssw	r0, -10                         # 2-byte Folded Spill
 	stw	r1, r0
 	ldi	r0, 17
 	ldi	r1, 24
@@ -2113,7 +2136,7 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 13
 	ldi	r1, 20
 	jsr	insert_seq_bot
-	lsw	r1, -18                         # 2-byte Folded Reload
+	lsw	r1, -14                         # 2-byte Folded Reload
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
@@ -2122,9 +2145,9 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	jsr	insert_seq_player
 	ldi	r0, 30
 	ldi	r1, 37
-	ssw	r1, -16                         # 2-byte Folded Spill
+	ssw	r1, -12                         # 2-byte Folded Spill
 	jsr	insert_seq_bot
-	lsw	r1, -18                         # 2-byte Folded Reload
+	lsw	r1, -14                         # 2-byte Folded Reload
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
@@ -2134,7 +2157,7 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 47
 	ldi	r1, 54
 	jsr	insert_seq_bot
-	lsw	r1, -18                         # 2-byte Folded Reload
+	lsw	r1, -14                         # 2-byte Folded Reload
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
@@ -2144,8 +2167,8 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 64
 	ldi	r1, 71
 	jsr	insert_seq_bot
-	lsw	r2, -18                         # 2-byte Folded Reload
-	lsw	r0, -16                         # 2-byte Folded Reload
+	lsw	r2, -14                         # 2-byte Folded Reload
+	lsw	r0, -12                         # 2-byte Folded Reload
 	ldw	r2, r1
 	add	r1, 1
 	stw	r2, r1
@@ -2154,7 +2177,7 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 81
 	ldi	r1, 88
 	jsr	insert_seq_bot
-	lsw	r0, -14                         # 2-byte Folded Reload
+	lsw	r0, -10                         # 2-byte Folded Reload
 	ssw	r0, -6
 	br	__LBB7_3
 __LBB7_3:                               #   Parent Loop BB7_1 Depth=1
@@ -2165,13 +2188,13 @@ __LBB7_3:                               #   Parent Loop BB7_1 Depth=1
 	bgt	__LBB7_6
 	br	__LBB7_4
 __LBB7_4:                               #   in Loop: Header=BB7_3 Depth=2
-	lsw	r0, -4
+	lsw	r0, -6
 	shl	r0, r0, 1
 	ldi	r1, SUIT_VALUE
 	ldw	r0, r1, r0
 	ldi	r1, 1
 	and r0, r1, r0
-	lsw	r1, -4
+	lsw	r1, -6
 	shl	r1, r1, 1
 	ldi	r2, prob_raise
 	stw	r1, r2, r0
@@ -2192,37 +2215,19 @@ __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	stw	r1, r0
 	jsr	analysis
 	ldi	r1, SEQUENCE_PTR
+	ssw	r1, -18                         # 2-byte Folded Spill
 	ldi	r0, -16384
 	stw	r1, r0
 	ldi	r1, SEQUENCE_LEN
+	ssw	r1, -16                         # 2-byte Folded Spill
 	ldi	r0, 132
 	stw	r1, r0
-	ldi	r0, 0
-	ssw	r0, -8
-	br	__LBB7_7
-__LBB7_7:                               #   Parent Loop BB7_1 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	lsw	r0, -8
-	ldi	r1, 1
-	cmp	r0, r1
-	bgt	__LBB7_10
-	br	__LBB7_8
-__LBB7_8:                               #   in Loop: Header=BB7_7 Depth=2
-	ldi	r0, 0
-	ssw	r0, -10
-	br	__LBB7_9
-__LBB7_9:                               #   in Loop: Header=BB7_7 Depth=2
-	lsw	r0, -8
-	add	r0, 1
-	ssw	r0, -8
-	br	__LBB7_7
-__LBB7_10:                              #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 10
 	jsr	delay
-	ldi	r1, SEQUENCE_PTR
+	lsw	r2, -18                         # 2-byte Folded Reload
+	lsw	r1, -16                         # 2-byte Folded Reload
 	ldi	r0, -16192
-	stw	r1, r0
-	ldi	r1, SEQUENCE_LEN
+	stw	r2, r0
 	ldi	r0, 114
 	stw	r1, r0
 	ldi	r0, COMB1
@@ -2230,24 +2235,21 @@ __LBB7_10:                              #   in Loop: Header=BB7_1 Depth=1
 	shl	r0, r0, 1
 	ldi	r1, stronger_probabilities
 	ldw	r0, r1, r0
-	ssw	r0, -12
-	lsw	r0, -12
+	ssw	r0, -8
+	lsw	r0, -8
 	jsr	raund
 	ldi	r1, BID_BOT
 	ldi	r0, 0
 	stw	r1, r0
 	ldi	r1, BID_PLAYER
 	stw	r1, r0
-	ldi	r1, RD_WR
-	ldi	r0, 1
-	stw	r1, r0
-	br	__LBB7_11
-__LBB7_11:                              #   in Loop: Header=BB7_1 Depth=1
+	br	__LBB7_7
+__LBB7_7:                               #   in Loop: Header=BB7_1 Depth=1
 	lsw	r0, -4
 	add	r0, 1
 	ssw	r0, -4
 	br	__LBB7_1
-__LBB7_12:
+__LBB7_8:
 	ldi	r0, 0
 	addsp	18
 	pop	fp

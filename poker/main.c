@@ -5,6 +5,10 @@
 #define print_four_card_pl SEQUENCE_PTR = 0xcd00; SEQUENCE_LEN = 82;
 #define print_five_card_pl SEQUENCE_PTR = 0xce00; SEQUENCE_LEN = 90;
 #define print_bot_card SEQUENCE_PTR = 0xcf00; SEQUENCE_LEN = 184;
+#define win_player SEQUENCE_PTR = 0xd000; SEQUENCE_LEN = 76;
+#define win_bot SEQUENCE_PTR = 0xd100; SEQUENCE_LEN = 84;
+#define delete_winner SEQUENCE_PTR = 0xd200; SEQUENCE_LEN = 122;
+#define delete_cards SEQUENCE_PTR = 0xd300; SEQUENCE_LEN = 440;
 
 extern volatile int SUIT_VALUE[30];
 extern volatile int RD_WR;
@@ -32,6 +36,11 @@ extern volatile int CHANGE_COURSE_TO_PL[100];
 extern volatile int PRINT_FOUR_CARD_PL[41];
 extern volatile int PRINT_FIVE_CARD_PL[45];
 extern volatile int PRINT_BOT_CARD[92];
+extern volatile int WIN_PL[38];
+extern volatile int WIN_BOT[42];
+extern volatile int DELETE_WINNER[61];
+// extern volatile int DELETE_WINNER[61];
+
 
 extern volatile int SEQUENCE_LEN;
 extern volatile int SEQUENCE_PTR;
@@ -495,8 +504,11 @@ void raund(int bot_stronger_prob)
         delete_points
         BALANCE_PLAYER += BID_BOT;
         BALANCE_PLAYER += BID_PLAYER;
+        win_player
         //вывести победителя!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         RD_WR = 1;
+        delete_winner
+        delete_cards
     }
     else if(FOLD == 2 || WHO_WIN == 1)//игрок сдался или бот выиграл
     {
@@ -505,8 +517,11 @@ void raund(int bot_stronger_prob)
         delete_points
         BALANCE_BOT += BID_BOT;
         BALANCE_BOT += BID_PLAYER;
+        win_bot
         //вывести победителя!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         RD_WR = 1;
+        delete_winner
+        delete_cards
     }
     return;
 }
@@ -609,6 +624,7 @@ int main(){
     BALANCE_PLAYER = 2000;
     for(int i = 0; i < 3; i++)
     {
+        
         BID_BOT = 5;
         BID_PLAYER = 10;
         BALANCE_BOT -= BID_BOT;
@@ -660,7 +676,7 @@ int main(){
 
         for(int j = 0; j < 6; j++)//надо проверить
         {
-            prob_raise[i] = SUIT_VALUE[i]&1;
+            prob_raise[j] = SUIT_VALUE[j]&1;
         }
         // if(i == 0)//убрать
         // {
@@ -668,7 +684,7 @@ int main(){
         // }
         // else
         // {
-            prob_fold = SUIT_VALUE[6]&1;
+        prob_fold = SUIT_VALUE[6]&1;
         // }
         // prob_fold = 1;/////////////////////
         // RD_WR = 1;////////////////////////
@@ -691,10 +707,6 @@ int main(){
         // SEQUENCE_PTR = 0xc000;
         // SEQUENCE_LEN = 132;
         // RD_WR = 1;//убрать.........................
-        for(int i = 0; i < 2; i++)//задержка перед следующей коммандой
-        {
-            int a = 0;
-        }
         delay(10);
         //убрали точки у комманды
         delete_points
@@ -705,7 +717,8 @@ int main(){
         raund(bot_stronger_prob);
         BID_BOT = 0;
         BID_PLAYER = 0;
-        RD_WR = 1;//убрать.........................
+        // RD_WR = 1;//убрать.........................
+
     }
     return 0;
 }
