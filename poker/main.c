@@ -1,14 +1,16 @@
 #define three_card_pl  SEQUENCE_PTR = 0xc000; SEQUENCE_LEN = 132;
 #define delete_points   SEQUENCE_PTR = 0xc0c0; SEQUENCE_LEN = 114;
 #define change_course_bot SEQUENCE_PTR = 0xca00; SEQUENCE_LEN = 200;
-#define change_course_pl SEQUENCE_PTR = 0xcc00; SEQUENCE_LEN = 200;
+#define change_course_pl SEQUENCE_PTR = 0xcc00; SEQUENCE_LEN = 194;
 #define print_four_card_pl SEQUENCE_PTR = 0xcd00; SEQUENCE_LEN = 82;
-#define print_five_card_pl SEQUENCE_PTR = 0xce00; SEQUENCE_LEN = 90;
+#define print_five_card_pl SEQUENCE_PTR = 0xd500; SEQUENCE_LEN = 98;
 #define print_bot_card SEQUENCE_PTR = 0xcf00; SEQUENCE_LEN = 184;
 #define win_player SEQUENCE_PTR = 0xd000; SEQUENCE_LEN = 76;
 #define win_bot SEQUENCE_PTR = 0xd100; SEQUENCE_LEN = 84;
 #define delete_winner SEQUENCE_PTR = 0xd200; SEQUENCE_LEN = 122;
-#define delete_cards SEQUENCE_PTR = 0xd300; SEQUENCE_LEN = 440;
+#define delete_cards SEQUENCE_PTR = 0xd300; SEQUENCE_LEN = 330;
+#define final_win_bot SEQUENCE_PTR = 0xd600; SEQUENCE_LEN = 96;
+#define final_win_pl SEQUENCE_PTR = 0xd700; SEQUENCE_LEN = 88;
 
 extern volatile int SUIT_VALUE[30];
 extern volatile int RD_WR;
@@ -32,9 +34,9 @@ extern volatile int RAUND;
 extern volatile int THREE_CARD_PL[66];
 extern volatile int DELETE_POINTS[57];
 extern volatile int CHANGE_COURSE_TO_BOT[100];
-extern volatile int CHANGE_COURSE_TO_PL[100];
+extern volatile int CHANGE_COURSE_TO_PL[97];
 extern volatile int PRINT_FOUR_CARD_PL[41];
-extern volatile int PRINT_FIVE_CARD_PL[45];
+extern volatile int PRINT_FIVE_CARD_PL[49];
 extern volatile int PRINT_BOT_CARD[92];
 extern volatile int WIN_PL[38];
 extern volatile int WIN_BOT[42];
@@ -102,7 +104,7 @@ void analysis() {
     int res1[13], res2[13], flags[2] = { 0, 0 }; // res - массивы для хранения количества карт каждого достоинства
     int flash[2] = { 0, 0 }; // для обнаружения флеша в комбинации
 
-    for(int i = 0; i < 13; i++)
+    for (int i = 0; i < 13; i++)
     {
         res1[i] = 0;
         res2[i] = 0;
@@ -113,7 +115,7 @@ void analysis() {
         //     res1[hand1.cards[i].value - '2']++;
         //     continue;
         // }
-        if(hand1.cards[i].value <= 0x39)
+        if (hand1.cards[i].value <= 0x39)
         {
             res1[hand1.cards[i].value - fif]++;
             continue;
@@ -143,14 +145,14 @@ void analysis() {
             continue;
         }
     }
-        
+
     for (int i = 0; i < 5; i++) {
         // if(hand2.cards[i].value <= 0x39)
         // {
         //     res2[hand2.cards[i].value - 50]++;
         //     continue;
         // }
-        if(hand2.cards[i].value <= 0x39)
+        if (hand2.cards[i].value <= 0x39)
         {
             res2[hand2.cards[i].value - fif]++;
             continue;
@@ -189,13 +191,13 @@ void analysis() {
     if (hand2.cards[0].suit == hand2.cards[1].suit && hand2.cards[0].suit == hand2.cards[2].suit && hand2.cards[0].suit == hand2.cards[3].suit && hand2.cards[0].suit == hand2.cards[4].suit) {
         flash[1] = 1; // аналогично для второй руки
     }
-    
+
     for (int i = 0; i < 13; i++) {
         if (res1[i] == 1) {
             if (i <= 8 && res1[i + 1] == 1 && res1[i + 2] == 1 && res1[i + 3] == 1 && res1[i + 4] == 1) { // если стрит
                 if (flash[0] == 1) {
                     if (i == 8) { // стрит и флеш и первая карта в порядке по возрастанию это 10 => флеш рояль
-                        COMB1 = 9; 
+                        COMB1 = 9;
                         break;
                     }
 
@@ -242,7 +244,7 @@ void analysis() {
 
             break;
         }
-        
+
         if (res1[i] == 3) {
             for (int k = i + 1; k < 13; k++) {
                 if (res1[k] == 2) { // фулл хаус
@@ -340,20 +342,59 @@ void analysis() {
 
     if (COMB1 == COMB2) {
         for (int i = 12; i >= 0; i--) {
-            if (res1[i] == 1 && res2[i] == 0) { // старшая карта у первой руки
-                WHO_WIN = 1;
-                return; // идём от старших карт к младшим - если нашли различия у рук в наличии какой-либо карты, то дальше нет смысла искать старшую карту
+            if (COMB1 == 1 || COMB1 == 2) { // если пара или две пары
+                if (res1[i] == 2 && res1[i] > res2[i]) { // старшая карта у первой руки
+                    WHO_WIN = 1;
+                    return; // идём от старших карт к младшим - если нашли различия у рук в наличии какой-либо карты, то дальше нет смысла искать старшую карту
+                }
+
+                if (res2[i] == 2 && res2[i] > res1[i]) { // старшая карта у второй руки
+                    WHO_WIN = 2;
+                    return;
+                }
             }
 
-            if (res2[i] == 1 && res1[i] == 0) { // старшая карта у второй руки
-                WHO_WIN = 2;
-                return;
+            else if (COMB1 == 3) {
+                if (res1[i] == 3 && res1[i] > res2[i]) {
+                    WHO_WIN = 1;
+                    return; 
+                }
+
+                if (res2[i] == 3 && res2[i] > res1[i]) {
+                    WHO_WIN = 2;
+                    return;
+                }
+            }
+
+            else if (COMB1 == 7) {
+                if (res1[i] == 4 && res1[i] > res2[i]) {
+                    WHO_WIN = 1;
+                    return;
+                }
+
+                if (res2[i] == 4 && res2[i] > res1[i]) {
+                    WHO_WIN = 2;
+                    return;
+                }
+            }
+
+            else {
+                if (res1[i] > 0 && res2[i] == 0) {
+                    WHO_WIN = 1;
+                    return;
+                }
+
+                if (res2[i] > 0 && res1[i] == 0) {
+                    WHO_WIN = 2;
+                    return;
+                }
             }
         }
 
         WHO_WIN = 0; // достоинства всех карт первой руки совпадают с достоинствами всех карт второй руки => ничья
     }
 }
+
 
 int card_raund = 0;
 void generate_cards()
@@ -484,20 +525,47 @@ void raund(int bot_stronger_prob)
             if(RAUND == 1)
             {
                 print_four_card_pl
-                delay(3);
+                delay(5);
                 delete_points
             }
             else
             {
                 print_five_card_pl
-                delay(3);
+                delay(5);
                 delete_points
             }
             RAUND++;
         }
         //MAKE PRINT 4 - 5 CARDS!!!!!!!!!!!!!!!!!!!
     }
-    if(FOLD == 1 || WHO_WIN == 2) //бот сдался или игрок выиграл
+    if (FOLD == 1) //бот сдался
+    {
+        WHO_WIN = 2;
+        if(RAUND == 1)
+        {
+            print_four_card_pl
+            print_five_card_pl
+        }
+        else if(RAUND == 2)
+        {
+            print_five_card_pl
+        }
+    }
+    else if(FOLD == 2)//игрок сдался
+    {
+        WHO_WIN = 1;
+        if(RAUND == 1)
+        {
+            print_four_card_pl
+            print_five_card_pl
+        }
+        else if(RAUND == 2)
+        {
+            print_five_card_pl
+        }
+    }
+
+    if(WHO_WIN == 2) //игрок выиграл
     {
         print_bot_card
         delay(5);
@@ -510,7 +578,7 @@ void raund(int bot_stronger_prob)
         delete_winner
         delete_cards
     }
-    else if(FOLD == 2 || WHO_WIN == 1)//игрок сдался или бот выиграл
+    else if(WHO_WIN == 1)//бот выиграл
     {
         print_bot_card
         delay(5);
@@ -618,45 +686,18 @@ void insert_seq_bot(int num1, int num2)
 }
 
 
-
 int main(){
     BALANCE_BOT = 2000;
     BALANCE_PLAYER = 2000;
+    int suit_iter = 0;
     for(int i = 0; i < 3; i++)
     {
-        
+        FOLD = 0;   
         BID_BOT = 5;
         BID_PLAYER = 10;
         BALANCE_BOT -= BID_BOT;
         BALANCE_PLAYER -= BID_PLAYER;
-        // if (i == 0)//убрать
-        // {
-        //     hand1.cards[0].suit = 'D';
-        //     hand1.cards[0].value = 'A';
-        //     hand1.cards[1].suit = 'H';
-        //     hand1.cards[1].value = 'T';
-        //     hand1.cards[2].suit = 'H';
-        //     hand1.cards[2].value = 'K';
-        //     hand1.cards[3].suit = 'C';
-        //     hand1.cards[3].value = 'K';
-        //     hand1.cards[4].suit = 'D';
-        //     hand1.cards[4].value = '2';
-
-        //     hand2.cards[0].suit = 'C';
-        //     hand2.cards[0].value = '3';
-        //     hand2.cards[1].suit = 'H';
-        //     hand2.cards[1].value = '3';
-        //     hand2.cards[2].suit = 'H';
-        //     hand2.cards[2].value = '9';
-        //     hand2.cards[3].suit = 'S';
-        //     hand2.cards[3].value = '6';
-        //     hand2.cards[4].suit = 'C';
-        //     hand2.cards[4].value = '9';
-        // }
-        // else
-        // {
-            generate_cards();
-        // }
+        generate_cards();
         hand_iteration = 0;
         insert_seq_player(17, 24);
         insert_seq_bot(13, 20);
@@ -670,55 +711,40 @@ int main(){
         insert_seq_player(33, 40);
         insert_seq_bot(64, 71); 
         hand_iteration++;
-        insert_seq_player(37, 44);
+        insert_seq_player(41, 48);
         insert_seq_bot(81, 88); 
 
-
-        for(int j = 0; j < 6; j++)//надо проверить
+        pointer_raise = 0;
+        for(int j = 0; j < 6; j++)
         {
-            prob_raise[j] = SUIT_VALUE[j]&1;
+            prob_raise[j] = SUIT_VALUE[suit_iter]&1;
+            suit_iter++;
         }
-        // if(i == 0)//убрать
-        // {
-        //     prob_fold = 1;
-        // }
-        // else
-        // {
         prob_fold = SUIT_VALUE[6]&1;
-        // }
-        // prob_fold = 1;/////////////////////
-        // RD_WR = 1;////////////////////////
-        // RD_WR = 1;////////////////////
 
         RAUND = 1;  
 
-        // if(i == 0)//убрать
-        // {
-        //     COMB1 = 0;
-        //     COMB2 = 0;
-        //     WHO_WIN = 1;
-        // }
-        // else
-        // {
         analysis();
         
         //вывод 3 карт
         three_card_pl
-        // SEQUENCE_PTR = 0xc000;
-        // SEQUENCE_LEN = 132;
-        // RD_WR = 1;//убрать.........................
         delay(10);
         //убрали точки у комманды
         delete_points
-        // SEQUENCE_PTR = 0xc0c0;
-        // SEQUENCE_LEN = 114;
 
         int bot_stronger_prob = stronger_probabilities[COMB1];//вероятность что у игрока будет комбинация лучше
         raund(bot_stronger_prob);
         BID_BOT = 0;
         BID_PLAYER = 0;
-        // RD_WR = 1;//убрать.........................
+    }
 
+    if(BALANCE_BOT > BALANCE_PLAYER)
+    {
+        final_win_bot
+    }
+    else if(BALANCE_BOT < BALANCE_PLAYER)
+    {
+        final_win_pl
     }
     return 0;
 }

@@ -1024,7 +1024,7 @@ __LBB1_136:
 	ldi	r1, COMB2
 	ldw	r1, r1
 	cmp	r0, r1
-	bne	__LBB1_148
+	bne	__LBB1_176
 	br	__LBB1_137
 __LBB1_137:
 	ldi	r0, 12
@@ -1034,34 +1034,230 @@ __LBB1_138:                             # =>This Inner Loop Header: Depth=1
 	lsw	r0, -82
 	ldi	r1, 0
 	cmp	r0, r1
-	blt	__LBB1_147
+	blt	__LBB1_175
 	br	__LBB1_139
 __LBB1_139:                             #   in Loop: Header=BB1_138 Depth=1
+	ldi	r0, COMB1
+	ldw	r0, r0
+	ldi	r1, 1
+	cmp	r0, r1
+	beq	__LBB1_141
+	br	__LBB1_140
+__LBB1_140:                             #   in Loop: Header=BB1_138 Depth=1
+	ldi	r0, COMB1
+	ldw	r0, r0
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB1_148
+	br	__LBB1_141
+__LBB1_141:                             #   in Loop: Header=BB1_138 Depth=1
 	lsw	r0, -82
 	shl	r0, r1, 1
 	ldi	r0, -28
 	add	r0, fp, r0
 	ldw	r0, r1, r0
-	ldi	r1, 1
+	ldi	r1, 2
 	cmp	r0, r1
-	bne	__LBB1_142
-	br	__LBB1_140
-__LBB1_140:                             #   in Loop: Header=BB1_138 Depth=1
+	bne	__LBB1_144
+	br	__LBB1_142
+__LBB1_142:                             #   in Loop: Header=BB1_138 Depth=1
 	lsw	r0, -82
-	shl	r0, r1, 1
-	ldi	r0, -54
+	shl	r0, r2, 1
+	ldi	r0, -28
 	add	r0, fp, r0
-	ldw	r0, r1, r0
-	ldi	r1, 0
+	ldw	r0, r2, r0
+	ldi	r1, -54
+	add	r1, fp, r1
+	ldw	r1, r2, r1
 	cmp	r0, r1
-	bne	__LBB1_142
-	br	__LBB1_141
-__LBB1_141:
+	ble	__LBB1_144
+	br	__LBB1_143
+__LBB1_143:
 	ldi	r1, WHO_WIN
 	ldi	r0, 1
 	stw	r1, r0
-	br	__LBB1_148
-__LBB1_142:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_176
+__LBB1_144:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB1_147
+	br	__LBB1_145
+__LBB1_145:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r2, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r2, r0
+	ldi	r1, -28
+	add	r1, fp, r1
+	ldw	r1, r2, r1
+	cmp	r0, r1
+	ble	__LBB1_147
+	br	__LBB1_146
+__LBB1_146:
+	ldi	r1, WHO_WIN
+	ldi	r0, 2
+	stw	r1, r0
+	br	__LBB1_176
+__LBB1_147:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_173
+__LBB1_148:                             #   in Loop: Header=BB1_138 Depth=1
+	ldi	r0, COMB1
+	ldw	r0, r0
+	ldi	r1, 3
+	cmp	r0, r1
+	bne	__LBB1_156
+	br	__LBB1_149
+__LBB1_149:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -28
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 3
+	cmp	r0, r1
+	bne	__LBB1_152
+	br	__LBB1_150
+__LBB1_150:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r2, 1
+	ldi	r0, -28
+	add	r0, fp, r0
+	ldw	r0, r2, r0
+	ldi	r1, -54
+	add	r1, fp, r1
+	ldw	r1, r2, r1
+	cmp	r0, r1
+	ble	__LBB1_152
+	br	__LBB1_151
+__LBB1_151:
+	ldi	r1, WHO_WIN
+	ldi	r0, 1
+	stw	r1, r0
+	br	__LBB1_176
+__LBB1_152:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 3
+	cmp	r0, r1
+	bne	__LBB1_155
+	br	__LBB1_153
+__LBB1_153:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r2, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r2, r0
+	ldi	r1, -28
+	add	r1, fp, r1
+	ldw	r1, r2, r1
+	cmp	r0, r1
+	ble	__LBB1_155
+	br	__LBB1_154
+__LBB1_154:
+	ldi	r1, WHO_WIN
+	ldi	r0, 2
+	stw	r1, r0
+	br	__LBB1_176
+__LBB1_155:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_172
+__LBB1_156:                             #   in Loop: Header=BB1_138 Depth=1
+	ldi	r0, COMB1
+	ldw	r0, r0
+	ldi	r1, 7
+	cmp	r0, r1
+	bne	__LBB1_164
+	br	__LBB1_157
+__LBB1_157:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -28
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 4
+	cmp	r0, r1
+	bne	__LBB1_160
+	br	__LBB1_158
+__LBB1_158:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r2, 1
+	ldi	r0, -28
+	add	r0, fp, r0
+	ldw	r0, r2, r0
+	ldi	r1, -54
+	add	r1, fp, r1
+	ldw	r1, r2, r1
+	cmp	r0, r1
+	ble	__LBB1_160
+	br	__LBB1_159
+__LBB1_159:
+	ldi	r1, WHO_WIN
+	ldi	r0, 1
+	stw	r1, r0
+	br	__LBB1_176
+__LBB1_160:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 4
+	cmp	r0, r1
+	bne	__LBB1_163
+	br	__LBB1_161
+__LBB1_161:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r2, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r2, r0
+	ldi	r1, -28
+	add	r1, fp, r1
+	ldw	r1, r2, r1
+	cmp	r0, r1
+	ble	__LBB1_163
+	br	__LBB1_162
+__LBB1_162:
+	ldi	r1, WHO_WIN
+	ldi	r0, 2
+	stw	r1, r0
+	br	__LBB1_176
+__LBB1_163:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_171
+__LBB1_164:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -28
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 1
+	cmp	r0, r1
+	blt	__LBB1_167
+	br	__LBB1_165
+__LBB1_165:                             #   in Loop: Header=BB1_138 Depth=1
+	lsw	r0, -82
+	shl	r0, r1, 1
+	ldi	r0, -54
+	add	r0, fp, r0
+	ldw	r0, r1, r0
+	ldi	r1, 0
+	cmp	r0, r1
+	bne	__LBB1_167
+	br	__LBB1_166
+__LBB1_166:
+	ldi	r1, WHO_WIN
+	ldi	r0, 1
+	stw	r1, r0
+	br	__LBB1_176
+__LBB1_167:                             #   in Loop: Header=BB1_138 Depth=1
 	lsw	r0, -82
 	shl	r0, r1, 1
 	ldi	r0, -54
@@ -1069,9 +1265,9 @@ __LBB1_142:                             #   in Loop: Header=BB1_138 Depth=1
 	ldw	r0, r1, r0
 	ldi	r1, 1
 	cmp	r0, r1
-	bne	__LBB1_145
-	br	__LBB1_143
-__LBB1_143:                             #   in Loop: Header=BB1_138 Depth=1
+	blt	__LBB1_170
+	br	__LBB1_168
+__LBB1_168:                             #   in Loop: Header=BB1_138 Depth=1
 	lsw	r0, -82
 	shl	r0, r1, 1
 	ldi	r0, -28
@@ -1079,26 +1275,32 @@ __LBB1_143:                             #   in Loop: Header=BB1_138 Depth=1
 	ldw	r0, r1, r0
 	ldi	r1, 0
 	cmp	r0, r1
-	bne	__LBB1_145
-	br	__LBB1_144
-__LBB1_144:
+	bne	__LBB1_170
+	br	__LBB1_169
+__LBB1_169:
 	ldi	r1, WHO_WIN
 	ldi	r0, 2
 	stw	r1, r0
-	br	__LBB1_148
-__LBB1_145:                             #   in Loop: Header=BB1_138 Depth=1
-	br	__LBB1_146
-__LBB1_146:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_176
+__LBB1_170:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_171
+__LBB1_171:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_172
+__LBB1_172:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_173
+__LBB1_173:                             #   in Loop: Header=BB1_138 Depth=1
+	br	__LBB1_174
+__LBB1_174:                             #   in Loop: Header=BB1_138 Depth=1
 	lsw	r0, -82
 	sub	r0, 1
 	ssw	r0, -82
 	br	__LBB1_138
-__LBB1_147:
+__LBB1_175:
 	ldi	r1, WHO_WIN
 	ldi	r0, 0
 	stw	r1, r0
-	br	__LBB1_148
-__LBB1_148:
+	br	__LBB1_176
+__LBB1_176:
 	addsp	82
 	pop	fp
 	rts
@@ -1282,7 +1484,7 @@ __LBB3_9:
 	stw	r1, r0
 	ldi	r1, SEQUENCE_LEN
 	ssw	r1, -10                         # 2-byte Folded Spill
-	ldi	r0, 200
+	ldi	r0, 194
 	stw	r1, r0
 	ldi	r0, 5
 	jsr	delay
@@ -1585,7 +1787,7 @@ __LBB4_41:                              #   in Loop: Header=BB4_1 Depth=1
 	ssw	r1, -12                         # 2-byte Folded Spill
 	ldi	r0, 82
 	stw	r1, r0
-	ldi	r0, 3
+	ldi	r0, 5
 	jsr	delay
 	lsw	r2, -14                         # 2-byte Folded Reload
 	lsw	r1, -12                         # 2-byte Folded Reload
@@ -1597,13 +1799,13 @@ __LBB4_41:                              #   in Loop: Header=BB4_1 Depth=1
 __LBB4_42:                              #   in Loop: Header=BB4_1 Depth=1
 	ldi	r1, SEQUENCE_PTR
 	ssw	r1, -18                         # 2-byte Folded Spill
-	ldi	r0, -12800
+	ldi	r0, -11008
 	stw	r1, r0
 	ldi	r1, SEQUENCE_LEN
 	ssw	r1, -16                         # 2-byte Folded Spill
-	ldi	r0, 90
+	ldi	r0, 98
 	stw	r1, r0
-	ldi	r0, 3
+	ldi	r0, 5
 	jsr	delay
 	lsw	r2, -18                         # 2-byte Folded Reload
 	lsw	r1, -16                         # 2-byte Folded Reload
@@ -1630,16 +1832,106 @@ __LBB4_46:
 	ldw	r0, r0
 	ldi	r1, 1
 	cmp	r0, r1
-	beq	__LBB4_48
+	bne	__LBB4_53
 	br	__LBB4_47
 __LBB4_47:
-	ldi	r0, WHO_WIN
+	ldi	r1, WHO_WIN
+	ldi	r0, 2
+	stw	r1, r0
+	ldi	r0, RAUND
 	ldw	r0, r0
-	ldi	r1, 2
+	ldi	r1, 1
 	cmp	r0, r1
 	bne	__LBB4_49
 	br	__LBB4_48
 __LBB4_48:
+	ldi	r2, SEQUENCE_PTR
+	ldi	r0, -13056
+	stw	r2, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 82
+	stw	r1, r0
+	ldi	r0, -11008
+	stw	r2, r0
+	ldi	r0, 98
+	stw	r1, r0
+	br	__LBB4_52
+__LBB4_49:
+	ldi	r0, RAUND
+	ldw	r0, r0
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB4_51
+	br	__LBB4_50
+__LBB4_50:
+	ldi	r1, SEQUENCE_PTR
+	ldi	r0, -11008
+	stw	r1, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 98
+	stw	r1, r0
+	br	__LBB4_51
+__LBB4_51:
+	br	__LBB4_52
+__LBB4_52:
+	br	__LBB4_61
+__LBB4_53:
+	ldi	r0, FOLD
+	ldw	r0, r0
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB4_60
+	br	__LBB4_54
+__LBB4_54:
+	ldi	r0, WHO_WIN
+	ldi	r1, 1
+	stw	r0, r1
+	ldi	r0, RAUND
+	ldw	r0, r0
+	cmp	r0, r1
+	bne	__LBB4_56
+	br	__LBB4_55
+__LBB4_55:
+	ldi	r2, SEQUENCE_PTR
+	ldi	r0, -13056
+	stw	r2, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 82
+	stw	r1, r0
+	ldi	r0, -11008
+	stw	r2, r0
+	ldi	r0, 98
+	stw	r1, r0
+	br	__LBB4_59
+__LBB4_56:
+	ldi	r0, RAUND
+	ldw	r0, r0
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB4_58
+	br	__LBB4_57
+__LBB4_57:
+	ldi	r1, SEQUENCE_PTR
+	ldi	r0, -11008
+	stw	r1, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 98
+	stw	r1, r0
+	br	__LBB4_58
+__LBB4_58:
+	br	__LBB4_59
+__LBB4_59:
+	br	__LBB4_60
+__LBB4_60:
+	br	__LBB4_61
+__LBB4_61:
+	ldi	r0, WHO_WIN
+	ldw	r0, r0
+	ldi	r1, 2
+	cmp	r0, r1
+	bne	__LBB4_63
+	br	__LBB4_62
+__LBB4_62:
 	ldi	r1, SEQUENCE_PTR
 	ssw	r1, -22                         # 2-byte Folded Spill
 	ldi	r0, -12544
@@ -1680,24 +1972,17 @@ __LBB4_48:
 	stw	r1, r0
 	ldi	r0, -11520
 	stw	r2, r0
-	ldi	r0, 440
+	ldi	r0, 330
 	stw	r1, r0
-	br	__LBB4_53
-__LBB4_49:
-	ldi	r0, FOLD
-	ldw	r0, r0
-	ldi	r1, 2
-	cmp	r0, r1
-	beq	__LBB4_51
-	br	__LBB4_50
-__LBB4_50:
+	br	__LBB4_66
+__LBB4_63:
 	ldi	r0, WHO_WIN
 	ldw	r0, r0
 	ldi	r1, 1
 	cmp	r0, r1
-	bne	__LBB4_52
-	br	__LBB4_51
-__LBB4_51:
+	bne	__LBB4_65
+	br	__LBB4_64
+__LBB4_64:
 	ldi	r1, SEQUENCE_PTR
 	ssw	r1, -26                         # 2-byte Folded Spill
 	ldi	r0, -12544
@@ -1738,12 +2023,12 @@ __LBB4_51:
 	stw	r1, r0
 	ldi	r0, -11520
 	stw	r2, r0
-	ldi	r0, 440
+	ldi	r0, 330
 	stw	r1, r0
-	br	__LBB4_52
-__LBB4_52:
-	br	__LBB4_53
-__LBB4_53:
+	br	__LBB4_65
+__LBB4_65:
+	br	__LBB4_66
+__LBB4_66:
 	lsw	r4, -2                          # 2-byte Folded Reload
 	addsp	26
 	pop	fp
@@ -2090,7 +2375,7 @@ main>                                   # -- Begin function main
 # %bb.0:
 	push	fp
 	ldsp	fp
-	addsp	-18
+	addsp	-20
 	ldi	r0, 0
 	ssw	r0, -2
 	ldi	r2, BALANCE_BOT
@@ -2099,15 +2384,20 @@ main>                                   # -- Begin function main
 	ldi	r2, BALANCE_PLAYER
 	stw	r2, r1
 	ssw	r0, -4
+	ssw	r0, -6
 	br	__LBB7_1
 __LBB7_1:                               # =>This Loop Header: Depth=1
                                         #     Child Loop BB7_3 Depth 2
-	lsw	r0, -4
+	lsw	r0, -6
 	ldi	r1, 2
 	cmp	r0, r1
 	bgt	__LBB7_8
 	br	__LBB7_2
 __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
+	ldi	r1, FOLD
+	ldi	r0, 0
+	ssw	r0, -12                         # 2-byte Folded Spill
+	stw	r1, r0
 	ldi	r1, BID_BOT
 	ldi	r0, 5
 	stw	r1, r0
@@ -2125,10 +2415,9 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	sub r0, r2, r0
 	stw	r1, r0
 	jsr	generate_cards
+	lsw	r0, -12                         # 2-byte Folded Reload
 	ldi	r1, hand_iteration
-	ssw	r1, -14                         # 2-byte Folded Spill
-	ldi	r0, 0
-	ssw	r0, -10                         # 2-byte Folded Spill
+	ssw	r1, -16                         # 2-byte Folded Spill
 	stw	r1, r0
 	ldi	r0, 17
 	ldi	r1, 24
@@ -2136,18 +2425,18 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 13
 	ldi	r1, 20
 	jsr	insert_seq_bot
-	lsw	r1, -14                         # 2-byte Folded Reload
+	lsw	r1, -16                         # 2-byte Folded Reload
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
 	ldi	r0, 34
 	ldi	r1, 41
+	ssw	r1, -14                         # 2-byte Folded Spill
 	jsr	insert_seq_player
 	ldi	r0, 30
 	ldi	r1, 37
-	ssw	r1, -12                         # 2-byte Folded Spill
 	jsr	insert_seq_bot
-	lsw	r1, -14                         # 2-byte Folded Reload
+	lsw	r1, -16                         # 2-byte Folded Reload
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
@@ -2157,7 +2446,7 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 47
 	ldi	r1, 54
 	jsr	insert_seq_bot
-	lsw	r1, -14                         # 2-byte Folded Reload
+	lsw	r1, -16                         # 2-byte Folded Reload
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
@@ -2167,42 +2456,47 @@ __LBB7_2:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, 64
 	ldi	r1, 71
 	jsr	insert_seq_bot
-	lsw	r2, -14                         # 2-byte Folded Reload
-	lsw	r0, -12                         # 2-byte Folded Reload
+	lsw	r2, -16                         # 2-byte Folded Reload
+	lsw	r0, -14                         # 2-byte Folded Reload
 	ldw	r2, r1
 	add	r1, 1
 	stw	r2, r1
-	ldi	r1, 44
+	ldi	r1, 48
 	jsr	insert_seq_player
 	ldi	r0, 81
 	ldi	r1, 88
 	jsr	insert_seq_bot
-	lsw	r0, -10                         # 2-byte Folded Reload
-	ssw	r0, -6
+	lsw	r0, -12                         # 2-byte Folded Reload
+	ldi	r1, pointer_raise
+	stw	r1, r0
+	ssw	r0, -8
 	br	__LBB7_3
 __LBB7_3:                               #   Parent Loop BB7_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-	lsw	r0, -6
+	lsw	r0, -8
 	ldi	r1, 5
 	cmp	r0, r1
 	bgt	__LBB7_6
 	br	__LBB7_4
 __LBB7_4:                               #   in Loop: Header=BB7_3 Depth=2
-	lsw	r0, -6
+	lsw	r0, -4
 	shl	r0, r0, 1
 	ldi	r1, SUIT_VALUE
 	ldw	r0, r1, r0
 	ldi	r1, 1
 	and r0, r1, r0
-	lsw	r1, -6
+	lsw	r1, -8
 	shl	r1, r1, 1
 	ldi	r2, prob_raise
 	stw	r1, r2, r0
+	lsw	r0, -4
+	add	r0, 1
+	ssw	r0, -4
 	br	__LBB7_5
 __LBB7_5:                               #   in Loop: Header=BB7_3 Depth=2
-	lsw	r0, -6
+	lsw	r0, -8
 	add	r0, 1
-	ssw	r0, -6
+	ssw	r0, -8
 	br	__LBB7_3
 __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	ldi	r0, SUIT_VALUE+12
@@ -2215,17 +2509,17 @@ __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	stw	r1, r0
 	jsr	analysis
 	ldi	r1, SEQUENCE_PTR
-	ssw	r1, -18                         # 2-byte Folded Spill
+	ssw	r1, -20                         # 2-byte Folded Spill
 	ldi	r0, -16384
 	stw	r1, r0
 	ldi	r1, SEQUENCE_LEN
-	ssw	r1, -16                         # 2-byte Folded Spill
+	ssw	r1, -18                         # 2-byte Folded Spill
 	ldi	r0, 132
 	stw	r1, r0
 	ldi	r0, 10
 	jsr	delay
-	lsw	r2, -18                         # 2-byte Folded Reload
-	lsw	r1, -16                         # 2-byte Folded Reload
+	lsw	r2, -20                         # 2-byte Folded Reload
+	lsw	r1, -18                         # 2-byte Folded Reload
 	ldi	r0, -16192
 	stw	r2, r0
 	ldi	r0, 114
@@ -2235,8 +2529,8 @@ __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	shl	r0, r0, 1
 	ldi	r1, stronger_probabilities
 	ldw	r0, r1, r0
-	ssw	r0, -8
-	lsw	r0, -8
+	ssw	r0, -10
+	lsw	r0, -10
 	jsr	raund
 	ldi	r1, BID_BOT
 	ldi	r0, 0
@@ -2245,13 +2539,47 @@ __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	stw	r1, r0
 	br	__LBB7_7
 __LBB7_7:                               #   in Loop: Header=BB7_1 Depth=1
-	lsw	r0, -4
+	lsw	r0, -6
 	add	r0, 1
-	ssw	r0, -4
+	ssw	r0, -6
 	br	__LBB7_1
 __LBB7_8:
+	ldi	r0, BALANCE_BOT
+	ldw	r0, r0
+	ldi	r1, BALANCE_PLAYER
+	ldw	r1, r1
+	cmp	r0, r1
+	ble	__LBB7_10
+	br	__LBB7_9
+__LBB7_9:
+	ldi	r1, SEQUENCE_PTR
+	ldi	r0, -10752
+	stw	r1, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 96
+	stw	r1, r0
+	br	__LBB7_13
+__LBB7_10:
+	ldi	r0, BALANCE_BOT
+	ldw	r0, r0
+	ldi	r1, BALANCE_PLAYER
+	ldw	r1, r1
+	cmp	r0, r1
+	bge	__LBB7_12
+	br	__LBB7_11
+__LBB7_11:
+	ldi	r1, SEQUENCE_PTR
+	ldi	r0, -10496
+	stw	r1, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 88
+	stw	r1, r0
+	br	__LBB7_12
+__LBB7_12:
+	br	__LBB7_13
+__LBB7_13:
 	ldi	r0, 0
-	addsp	18
+	addsp	20
 	pop	fp
 	rts
                                         # -- End function
