@@ -12,7 +12,7 @@ BID_BOT: ext
 BALANCE_BOT: ext
 SEQUENCE_PTR: ext
 SEQUENCE_LEN: ext
-RAUND: ext
+ROUND: ext
 FOLD: ext
 RD_WR: ext
 COMMAND: ext
@@ -1333,7 +1333,7 @@ __LBB2_3:                               #   in Loop: Header=BB2_1 Depth=1
 	lsw	r0, -10
 	shl	r0, r3, 1
 	ldi	r4, hand1
-	ldi	r1, card_raund
+	ldi	r1, card_one_round
 	ldw	r1, r0
 	shl	r0, r0, 1
 	ldi	r2, SUIT_VALUE
@@ -1359,7 +1359,7 @@ __LBB2_4:                               #   in Loop: Header=BB2_1 Depth=1
 	lsw	r0, -8
 	shl	r0, r3, 1
 	ldi	r4, hand2
-	ldi	r1, card_raund
+	ldi	r1, card_one_round
 	ldw	r1, r0
 	shl	r0, r0, 1
 	ldi	r2, SUIT_VALUE
@@ -1499,7 +1499,7 @@ __LBB3_9:
 	pop	fp
 	rts
                                         # -- End function
-raund>                                  # -- Begin function raund
+one_round>                              # -- Begin function one_round
 # %bb.0:
 	push	fp
 	ldsp	fp
@@ -1522,7 +1522,7 @@ __LBB4_2:                               #   in Loop: Header=BB4_1 Depth=1
 	br	__LBB4_3
 __LBB4_3:                               #   Parent Loop BB4_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	ldi	r1, 2
 	cmp	r0, r1
@@ -1645,7 +1645,7 @@ __LBB4_17:                              #   in Loop: Header=BB4_3 Depth=2
 	lsw	r0, -8
 	add	r0, 1
 	ssw	r0, -8
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	ldi	r1, 1
 	cmp	r0, r1
@@ -1772,7 +1772,7 @@ __LBB4_38:                              #   in Loop: Header=BB4_1 Depth=1
 __LBB4_39:
 	br	__LBB4_46
 __LBB4_40:                              #   in Loop: Header=BB4_1 Depth=1
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	ldi	r1, 1
 	cmp	r0, r1
@@ -1815,7 +1815,7 @@ __LBB4_42:                              #   in Loop: Header=BB4_1 Depth=1
 	stw	r1, r0
 	br	__LBB4_43
 __LBB4_43:                              #   in Loop: Header=BB4_1 Depth=1
-	ldi	r1, RAUND
+	ldi	r1, ROUND
 	ldw	r1, r0
 	add	r0, 1
 	stw	r1, r0
@@ -1838,7 +1838,7 @@ __LBB4_47:
 	ldi	r1, WHO_WIN
 	ldi	r0, 2
 	stw	r1, r0
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	ldi	r1, 1
 	cmp	r0, r1
@@ -1857,7 +1857,7 @@ __LBB4_48:
 	stw	r1, r0
 	br	__LBB4_52
 __LBB4_49:
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	ldi	r1, 2
 	cmp	r0, r1
@@ -1886,7 +1886,7 @@ __LBB4_54:
 	ldi	r0, WHO_WIN
 	ldi	r1, 1
 	stw	r0, r1
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	cmp	r0, r1
 	bne	__LBB4_56
@@ -1904,7 +1904,7 @@ __LBB4_55:
 	stw	r1, r0
 	br	__LBB4_59
 __LBB4_56:
-	ldi	r0, RAUND
+	ldi	r0, ROUND
 	ldw	r0, r0
 	ldi	r1, 2
 	cmp	r0, r1
@@ -2505,7 +2505,7 @@ __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	and r1, r0, r1
 	ldi	r2, prob_fold
 	stw	r2, r1
-	ldi	r1, RAUND
+	ldi	r1, ROUND
 	stw	r1, r0
 	jsr	analysis
 	ldi	r1, SEQUENCE_PTR
@@ -2531,7 +2531,7 @@ __LBB7_6:                               #   in Loop: Header=BB7_1 Depth=1
 	ldw	r0, r1, r0
 	ssw	r0, -10
 	lsw	r0, -10
-	jsr	raund
+	jsr	one_round
 	ldi	r1, BID_BOT
 	ldi	r0, 0
 	stw	r1, r0
@@ -2721,7 +2721,7 @@ hand1>                                  # @hand1
 hand2>                                  # @hand2
 	ds	10
 
-card_raund>                             # @card_raund
+card_one_round>                         # @card_one_round
 	dc	0                               # 0x0
 
 prob_raise>                             # @prob_raise

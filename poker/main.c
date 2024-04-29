@@ -1,36 +1,41 @@
-#define three_card_pl  SEQUENCE_PTR = 0xc000; SEQUENCE_LEN = 132;
-#define delete_points   SEQUENCE_PTR = 0xc0c0; SEQUENCE_LEN = 114;
-#define change_course_bot SEQUENCE_PTR = 0xca00; SEQUENCE_LEN = 200;
-#define change_course_pl SEQUENCE_PTR = 0xcc00; SEQUENCE_LEN = 194;
-#define print_four_card_pl SEQUENCE_PTR = 0xcd00; SEQUENCE_LEN = 82;
-#define print_five_card_pl SEQUENCE_PTR = 0xd500; SEQUENCE_LEN = 98;
-#define print_bot_card SEQUENCE_PTR = 0xcf00; SEQUENCE_LEN = 184;
-#define win_player SEQUENCE_PTR = 0xd000; SEQUENCE_LEN = 76;
-#define win_bot SEQUENCE_PTR = 0xd100; SEQUENCE_LEN = 84;
-#define delete_winner SEQUENCE_PTR = 0xd200; SEQUENCE_LEN = 122;
-#define delete_cards SEQUENCE_PTR = 0xd300; SEQUENCE_LEN = 330;
-#define final_win_bot SEQUENCE_PTR = 0xd600; SEQUENCE_LEN = 96;
-#define final_win_pl SEQUENCE_PTR = 0xd700; SEQUENCE_LEN = 88;
-
-extern volatile int SUIT_VALUE[30];
-extern volatile int RD_WR;
-extern volatile int DARE[52];
-
-extern volatile int COMB1;
-extern volatile int COMB2;
-
-extern volatile int COMMAND;
-extern volatile int BID_COMMAND;
-
-extern volatile int BALANCE_BOT;
-extern volatile int BALANCE_PLAYER;
-extern volatile int BID_BOT;
-extern volatile int BID_PLAYER;
-
-extern volatile int FOLD;
-
-extern volatile int RAUND;
-
+/***************************************************************************************************************************/
+//use this to compile file: clang -target cdm -o  file.asm -S main.c
+//use this to create .img file: cocas -t cdm16 file.asm start.asm -o out.img
+/***************************************************************************************************************************/
+#define three_card_pl  SEQUENCE_PTR = 0xc000; SEQUENCE_LEN = 132; //display 3 player's cards
+#define delete_points   SEQUENCE_PTR = 0xc0c0; SEQUENCE_LEN = 114; //clear "command"  
+#define change_move_bot SEQUENCE_PTR = 0xca00; SEQUENCE_LEN = 200; //change move to bot
+#define change_move_pl SEQUENCE_PTR = 0xcc00; SEQUENCE_LEN = 194;  //change move to player
+#define print_four_card_pl SEQUENCE_PTR = 0xcd00; SEQUENCE_LEN = 82; //display player's fourth card
+#define print_five_card_pl SEQUENCE_PTR = 0xd500; SEQUENCE_LEN = 98; //display player's fifth card
+#define print_bot_card SEQUENCE_PTR = 0xcf00; SEQUENCE_LEN = 184;  //display 5 bot's cards
+#define win_player SEQUENCE_PTR = 0xd000; SEQUENCE_LEN = 76;       //display player victory
+#define win_bot SEQUENCE_PTR = 0xd100; SEQUENCE_LEN = 84;          //display bot victory
+#define delete_winner SEQUENCE_PTR = 0xd200; SEQUENCE_LEN = 122;   //delete winner
+#define delete_cards SEQUENCE_PTR = 0xd300; SEQUENCE_LEN = 330;    //remove all cards occurencess
+#define final_win_bot SEQUENCE_PTR = 0xd600; SEQUENCE_LEN = 96;    //display final bot victory
+#define final_win_pl SEQUENCE_PTR = 0xd700; SEQUENCE_LEN = 88;     //display final player victory
+/***************************************************************************************************************************/
+extern volatile int SUIT_VALUE[30];     //30 random values
+extern volatile int RD_WR;              //memory cell responsible for stopping the processor
+// extern volatile int DARE[52];           
+/***************************************************************************************************************************/
+extern volatile int COMB1; //Bot's cards combinations
+extern volatile int COMB2; //Player's cards combinations
+/***************************************************************************************************************************/
+extern volatile int COMMAND;     //what command was entered
+extern volatile int BID_COMMAND; //what bid was entered
+/***************************************************************************************************************************/
+extern volatile int BALANCE_BOT;    //bot's balance
+extern volatile int BALANCE_PLAYER; //player's balance
+extern volatile int BID_BOT;        //bot's bid
+extern volatile int BID_PLAYER;     //player's bid
+/***************************************************************************************************************************/
+extern volatile int FOLD;  //1 - if bot fold, 2 - if player fold
+/***************************************************************************************************************************/
+extern volatile int ROUND; //round of the game
+/***************************************************************************************************************************/
+                                        //interface arrays
 extern volatile int THREE_CARD_PL[66];
 extern volatile int DELETE_POINTS[57];
 extern volatile int CHANGE_COURSE_TO_BOT[100];
@@ -42,25 +47,21 @@ extern volatile int WIN_PL[38];
 extern volatile int WIN_BOT[42];
 extern volatile int DELETE_WINNER[61];
 // extern volatile int DELETE_WINNER[61];
-
-
+/***************************************************************************************************************************/
+                                    //two memory cells that help display the interface
 extern volatile int SEQUENCE_LEN;
 extern volatile int SEQUENCE_PTR;
-
-extern volatile int WHO_WIN;
-
+/***************************************************************************************************************************/
+extern volatile int WHO_WIN; //memory cell showing the winner
+/***************************************************************************************************************************/
 extern volatile int HAND1[5];
 extern volatile int HAND2[5];
-
-typedef struct Card{
+/***************************************************************************************************************************/
+                            //card, hand and dare structures
+typedef struct Card{ 
     char suit;
     char value;
 }Card;
-
-// typedef struct Card{
-//     int suit;
-//     int value;
-// }Card;
 
 typedef struct Hand{
     Card cards[5];
@@ -70,8 +71,8 @@ typedef struct Hand{
 typedef struct dare_c{
     Card cards[52];
 }dare_c;
-//hand1 - robot's hand, hand2 - player's hand
-Hand hand1, hand2;
+
+Hand hand1, hand2;      //hand1 - robot's hand, hand2 - player's hand
 dare_c dare = {{{'H', '2'}, {'H', '3'}, {'H', '4'},{'H', '5'}, {'H', '6'}, {'H', '7'},{'H', '8'}, {'H', '9'}, {'H', 'T'}, {'H', 'J'}, {'H', 'Q'}, {'H', 'K'}, {'H', 'A'},
      /*13 - 25*/{'D', '2'}, {'D', '3'}, {'D', '4'},{'D', '5'}, {'D', '6'}, {'D', '7'},{'D', '8'}, {'D', '9'}, {'D', 'T'}, {'D', 'J'}, {'D', 'Q'}, {'D', 'K'}, {'D', 'A'},
      /*26 - 38*/{'S', '2'}, {'S', '3'}, {'S', '4'},{'S', '5'}, {'S', '6'}, {'S', '7'},{'S', '8'}, {'S', '9'}, {'S', 'T'}, {'S', 'J'}, {'S', 'Q'}, {'S', 'K'}, {'S', 'A'},
@@ -82,29 +83,27 @@ dare_c dare = {{{'H', '2'}, {'H', '3'}, {'H', '4'},{'H', '5'}, {'H', '6'}, {'H',
 //              1A{'S', '2'}, 1B{'S', '3'}, 1C{'S', '4'},1D{'S', '5'}, 1E{'S', '6'}, 1F{'S', '7'},20{'S', '8'}, 21{'S', '9'}, 22{'S', 'T'}, 23{'S', 'J'}, 24{'S', 'Q'}, 25{'S', 'K'}, 26{'S', 'A'},
 //              27{'C', '2'}, 28{'C', '3'}, 29{'C', '4'},2A{'C', '5'}, 2B{'C', '6'}, 2C{'C', '7'},2D{'C', '8'}, 2E{'C', '9'}, 2F{'C', 'T'}, 30{'C', 'J'}, 31{'C', 'Q'}, 32{'C', 'K'}, 33{'C', 'A'}}};
 
+/***************************************************************************************************************************/
+int probabilities[10] = {5000, 4200, 400, 200, 39, 14, 2, 0, 0};//probability of getting a combination
+int stronger_probabilities[10] = {5000, 800, 330, 120, 80, 60, 45, 43, 40, 40};//the probability that the player has a better hand
 
-int probabilities[10] = {5000, 4200, 400, 200, 39, 14, 2, 0, 0};//вероятность выпадения комбинации
-int stronger_probabilities[10] = {5000, 800, 330, 120, 80, 60, 45, 43, 40, 40};//так как нельзя даблы использовать, то так
-
-//give cards each players on hands
-//writes cards in hand1 and hand2
-
-void delay(int num)
+/***************************************************************************************************************************/
+void delay(int num)     //delay for display
 {
     for(int i = 0; i < num; i++)
     {
         int a = 0;
     }
 }
-
-void analysis() {
+/***************************************************************************************************************************/
+void analysis() {       //analysis of card combinations
     COMB1 = 0, COMB2 = 0;
     int fif = 50;
 
-    int res1[13], res2[13], flags[2] = { 0, 0 }; // res - массивы для хранения количества карт каждого достоинства
-    int flash[2] = { 0, 0 }; // для обнаружения флеша в комбинации
+    int res1[13], res2[13], flags[2] = { 0, 0 }; // res - arrays for storing the number of cards of each value
+    int flash[2] = { 0, 0 }; //to detect a flush in a combination
 
-    for (int i = 0; i < 13; i++)
+    for (int i = 0; i < 13; i++) //reset res1 and res2
     {
         res1[i] = 0;
         res2[i] = 0;
@@ -185,60 +184,60 @@ void analysis() {
     }
 
     if (hand1.cards[0].suit == hand1.cards[1].suit && hand1.cards[0].suit == hand1.cards[2].suit && hand1.cards[0].suit == hand1.cards[3].suit && hand1.cards[0].suit == hand1.cards[4].suit) {
-        flash[0] = 1; // если 5 карт одной масти, то это флеш
+        flash[0] = 1; // if 5 cards are of the same suit, then it is a flush
     }
 
     if (hand2.cards[0].suit == hand2.cards[1].suit && hand2.cards[0].suit == hand2.cards[2].suit && hand2.cards[0].suit == hand2.cards[3].suit && hand2.cards[0].suit == hand2.cards[4].suit) {
-        flash[1] = 1; // аналогично для второй руки
+        flash[1] = 1; // similar for the second hand
     }
 
     for (int i = 0; i < 13; i++) {
         if (res1[i] == 1) {
-            if (i <= 8 && res1[i + 1] == 1 && res1[i + 2] == 1 && res1[i + 3] == 1 && res1[i + 4] == 1) { // если стрит
+            if (i <= 8 && res1[i + 1] == 1 && res1[i + 2] == 1 && res1[i + 3] == 1 && res1[i + 4] == 1) { // if it's a straight
                 if (flash[0] == 1) {
-                    if (i == 8) { // стрит и флеш и первая карта в порядке по возрастанию это 10 => флеш рояль
+                    if (i == 8) { //straight and flush and the first card in ascending order is 10 => royal flush
                         COMB1 = 9;
                         break;
                     }
 
-                    else { // если первая карта не 10, то стрит флеш
+                    else { // if the first card is not 10, then it is a straight flush
                         COMB1 = 8;
                         break;
                     }
                 }
 
-                else { // стрит, но не флеш
+                else { // straight but not flush
                     COMB1 = 4;
                     break;
                 }
             }
 
-            else if (flash[0] == 1) { // просто флеш
+            else if (flash[0] == 1) { // just a flush
                 COMB1 = 5;
             }
         }
 
-        if (res1[i] == 4) { // каре
+        if (res1[i] == 4) { // four of kind
             COMB1 = 7;
             break;
         }
 
         if (res1[i] == 2) {
             for (int k = i + 1; k < 13; k++) {
-                if (res1[k] == 2) { // две пары
+                if (res1[k] == 2) { // two pairs
                     COMB1 = 2;
                     flags[0] = 1;
                     break;
                 }
 
-                if (res1[k] == 3) { // фулл хаус
+                if (res1[k] == 3) { // full house
                     COMB1 = 6;
                     flags[0] = 1;
                     break;
                 }
             }
 
-            if (flags[0] == 0) { // если две пары и фулл хаус не подошли, то это пара
+            if (flags[0] == 0) { // if two pair and a full house don't match, then it's a pair
                 COMB1 = 1;
             }
 
@@ -247,14 +246,14 @@ void analysis() {
 
         if (res1[i] == 3) {
             for (int k = i + 1; k < 13; k++) {
-                if (res1[k] == 2) { // фулл хаус
+                if (res1[k] == 2) { // full house
                     COMB1 = 6;
                     flags[0] = 1;
                     break;
                 }
             }
 
-            if (flags[0] == 0) { // три карты одного достоинства, но не фулл хаус => сет
+            if (flags[0] == 0) { // three cards of the same value, but not a full house => set
                 COMB1 = 3;
             }
 
@@ -262,7 +261,7 @@ void analysis() {
         }
     }
 
-    for (int i = 0; i < 13; i++) { // аналогично для второй руки
+    for (int i = 0; i < 13; i++) { // similar for the second hand
         if (res2[i] == 1) {
             if (i <= 8 && res2[i + 1] == 1 && res2[i + 2] == 1 && res2[i + 3] == 1 && res2[i + 4] == 1) {
                 if (flash[1] == 1) {
@@ -342,13 +341,13 @@ void analysis() {
 
     if (COMB1 == COMB2) {
         for (int i = 12; i >= 0; i--) {
-            if (COMB1 == 1 || COMB1 == 2) { // если пара или две пары
-                if (res1[i] == 2 && res1[i] > res2[i]) { // старшая карта у первой руки
+            if (COMB1 == 1 || COMB1 == 2) { // if a pair or two pairs
+                if (res1[i] == 2 && res1[i] > res2[i]) { // first hand's highest card
                     WHO_WIN = 1;
-                    return; // идём от старших карт к младшим - если нашли различия у рук в наличии какой-либо карты, то дальше нет смысла искать старшую карту
+                    return; //we go from high cards to low ones - if we find differences in the hands in the presence of any card, then there is no point in further looking for the high card
                 }
 
-                if (res2[i] == 2 && res2[i] > res1[i]) { // старшая карта у второй руки
+                if (res2[i] == 2 && res2[i] > res1[i]) { // second hand's highest card
                     WHO_WIN = 2;
                     return;
                 }
@@ -391,38 +390,39 @@ void analysis() {
             }
         }
 
-        WHO_WIN = 0; // достоинства всех карт первой руки совпадают с достоинствами всех карт второй руки => ничья
+        WHO_WIN = 0; //the values ​​of all cards of the first hand coincide with the values ​​of all cards of the second hand => draw
     }
 }
 
-
-int card_raund = 0;
-void generate_cards()
+/***************************************************************************************************************************/
+int card_one_round = 0;
+void generate_cards()//generate cards for hand1 and hand2
 {
     int count = 0;
     for(int i = 0; i < 10; i++)
     {
         if(i < 5)
         {
-            hand1.cards[i] = dare.cards[SUIT_VALUE[card_raund]];
+            hand1.cards[i] = dare.cards[SUIT_VALUE[card_one_round]];
             HAND1[i] = hand1.cards[i].value;
-            card_raund++;
+            card_one_round++;
         }
         else
         {
-            hand2.cards[count] = dare.cards[SUIT_VALUE[card_raund]];
+            hand2.cards[count] = dare.cards[SUIT_VALUE[card_one_round]];
             HAND2[count] = hand2.cards[count].value;
-            card_raund++;
+            card_one_round++;
             count++;
         }
         
     }
 }
-
-int prob_raise[6] = {0};
+/***************************************************************************************************************************/
+int prob_raise[6] = {0}; //the probability that the bot will increase bid
 int pointer_raise = 0;
-int prob_fold;
-void bot_first(int bot_stronger_prob)
+int prob_fold; //the probability that the bot will fold
+
+void bot_first(int bot_stronger_prob)//logic for bot
 {
     if(BID_PLAYER > BID_BOT)//IF raise THEN call
     {
@@ -444,22 +444,21 @@ void bot_first(int bot_stronger_prob)
             
         }
     }
-    change_course_pl
+    change_move_pl
     delay(5);
     delete_points
     return;
 }
-
-
-void raund(int bot_stronger_prob)
+/***************************************************************************************************************************/
+//one round
+void one_round(int bot_stronger_prob)
 {
-    //(НАДО)удаляю строчку анализа
     for(int i = 0; i < 3; i++)
     {
         int raise_count = 0;
         while(1)
         {
-            if(RAUND > 1 && bot_stronger_prob > 6000)//бот сдается
+            if(ROUND > 1 && bot_stronger_prob > 6000)//Bot fold
             {
                 if(prob_fold == 1)
                 {
@@ -468,12 +467,12 @@ void raund(int bot_stronger_prob)
                 }
 
             }
-            RD_WR = 1;//ждем комманды и сразу же ее удаляем
+            RD_WR = 1;//We wait for the command and immediately delete it
             delete_points
-            if(COMMAND == 4 && BID_PLAYER >= BID_BOT) //check
+            if(COMMAND == 4 && BID_PLAYER >= BID_BOT) //IF check THEN
             {
-                delay(2);//изменяем на ход бота
-                change_course_bot
+                delay(2);
+                change_move_bot
                 bot_first(bot_stronger_prob);
                 if(BID_BOT > BID_PLAYER)
                 {
@@ -481,48 +480,49 @@ void raund(int bot_stronger_prob)
                 }
                 break;
             }
-            else if(COMMAND == 3 && BID_COMMAND <= 20 && BID_PLAYER >= BID_BOT) //raise
+            else if(COMMAND == 3 && BID_COMMAND <= 20 && BID_PLAYER >= BID_BOT) //IF raise THEN
             {
-                if(raise_count < 7) //raise only if raise_count < 7
+                if(raise_count < 7) //we can raise only if raise_count < 7
                 {
-                    delay(2);//изменяем на ход бота
-                    change_course_bot
+                    delay(2);
+                    change_move_bot
                     BALANCE_PLAYER -= BID_COMMAND;
                     BID_PLAYER += BID_COMMAND;
                     raise_count++;
-                    if(RAUND == 1)
+                    if(ROUND == 1)
                     {
                         if(COMB1 == 0)
-                            bot_stronger_prob += 300; //после 4 повышения
+                            bot_stronger_prob += 300; //after 4 raise
                         else if(COMB1 == 1)
-                            bot_stronger_prob += 1150; //после 5 повышения
+                            bot_stronger_prob += 1150; //after 5 raise
                         else if(COMB1 == 2)
-                            bot_stronger_prob += 1000; //после 6 повышения
+                            bot_stronger_prob += 1000; //after 6 raise
                     }
                     bot_first(bot_stronger_prob);
                 }
             }
-            else if(COMMAND == 2 &&  BID_PLAYER < BID_BOT) //call
+            else if(COMMAND == 2 &&  BID_PLAYER < BID_BOT) //IF call THEN
             {
-                delay(2);//изменяем на ход бота
-                change_course_bot
+                delay(2);
+                change_move_bot
                 int diff = BID_BOT - BID_PLAYER;
                 BALANCE_PLAYER -= diff;
                 BID_PLAYER = BID_BOT;
                 bot_first(bot_stronger_prob);
             }
-            else if(COMMAND == 1)
+            else if(COMMAND == 1) //IF fold THEN
             {
                 FOLD = 2;
                 break;
             }
         }
-        if(FOLD > 0)
+        if(FOLD > 0) //if someone fold
         {
             break;
         }
-        else{
-            if(RAUND == 1)
+        else        //else we display other cards
+        {
+            if(ROUND == 1)
             {
                 print_four_card_pl
                 delay(5);
@@ -534,38 +534,37 @@ void raund(int bot_stronger_prob)
                 delay(5);
                 delete_points
             }
-            RAUND++;
+            ROUND++;
         }
-        //MAKE PRINT 4 - 5 CARDS!!!!!!!!!!!!!!!!!!!
     }
-    if (FOLD == 1) //бот сдался
+    if (FOLD == 1) //if the bot folds
     {
         WHO_WIN = 2;
-        if(RAUND == 1)
+        if(ROUND == 1)
         {
             print_four_card_pl
             print_five_card_pl
         }
-        else if(RAUND == 2)
+        else if(ROUND == 2)
         {
             print_five_card_pl
         }
     }
-    else if(FOLD == 2)//игрок сдался
+    else if(FOLD == 2)//if the player folds
     {
         WHO_WIN = 1;
-        if(RAUND == 1)
+        if(ROUND == 1)
         {
             print_four_card_pl
             print_five_card_pl
         }
-        else if(RAUND == 2)
+        else if(ROUND == 2)
         {
             print_five_card_pl
         }
     }
 
-    if(WHO_WIN == 2) //игрок выиграл
+    if(WHO_WIN == 2) //if the player wins
     {
         print_bot_card
         delay(5);
@@ -573,12 +572,11 @@ void raund(int bot_stronger_prob)
         BALANCE_PLAYER += BID_BOT;
         BALANCE_PLAYER += BID_PLAYER;
         win_player
-        //вывести победителя!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         RD_WR = 1;
         delete_winner
         delete_cards
     }
-    else if(WHO_WIN == 1)//бот выиграл
+    else if(WHO_WIN == 1)//if the bot wins
     {
         print_bot_card
         delay(5);
@@ -586,7 +584,6 @@ void raund(int bot_stronger_prob)
         BALANCE_BOT += BID_BOT;
         BALANCE_BOT += BID_PLAYER;
         win_bot
-        //вывести победителя!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         RD_WR = 1;
         delete_winner
         delete_cards
@@ -594,9 +591,10 @@ void raund(int bot_stronger_prob)
     return;
 }
 
+/***************************************************************************************************************************/
+            //this block is necessary to display the maps we need
 int hand_iteration;
-
-void insert_seq_player(int num1, int num2)   //REWORK!!!!!!!!!!!!!!!!!!!!!!!
+void insert_seq_player(int num1, int num2)
 {
     if(hand_iteration < 3)
     {
@@ -684,20 +682,23 @@ void insert_seq_bot(int num1, int num2)
 
         PRINT_BOT_CARD[num2] = hand1.cards[hand_iteration].value;
 }
+/***************************************************************************************************************************/
 
-
-int main(){
-    BALANCE_BOT = 2000;
-    BALANCE_PLAYER = 2000;
+int main(){     //main function
+    //set the initial balance
+    BALANCE_BOT = 2000;      
+    BALANCE_PLAYER = 2000;   
     int suit_iter = 0;
     for(int i = 0; i < 3; i++)
     {
         FOLD = 0;   
-        BID_BOT = 5;
-        BID_PLAYER = 10;
+        BID_BOT = 5;        //set the initial the bot's bid
+        BID_PLAYER = 10;    //set the initial the player's bid
         BALANCE_BOT -= BID_BOT;
         BALANCE_PLAYER -= BID_PLAYER;
+
         generate_cards();
+
         hand_iteration = 0;
         insert_seq_player(17, 24);
         insert_seq_bot(13, 20);
@@ -722,27 +723,26 @@ int main(){
         }
         prob_fold = SUIT_VALUE[6]&1;
 
-        RAUND = 1;  
+        ROUND = 1;  
 
         analysis();
         
-        //вывод 3 карт
+        
         three_card_pl
         delay(10);
-        //убрали точки у комманды
         delete_points
 
-        int bot_stronger_prob = stronger_probabilities[COMB1];//вероятность что у игрока будет комбинация лучше
-        raund(bot_stronger_prob);
+        int bot_stronger_prob = stronger_probabilities[COMB1];//probability that the player will have a better combination
+        one_round(bot_stronger_prob);
         BID_BOT = 0;
         BID_PLAYER = 0;
     }
 
-    if(BALANCE_BOT > BALANCE_PLAYER)
+    if(BALANCE_BOT > BALANCE_PLAYER) //if bot win
     {
         final_win_bot
     }
-    else if(BALANCE_BOT < BALANCE_PLAYER)
+    else if(BALANCE_BOT < BALANCE_PLAYER) //if player win
     {
         final_win_pl
     }
