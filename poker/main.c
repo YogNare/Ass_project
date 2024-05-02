@@ -84,17 +84,17 @@ dare_c dare = {{{'H', '2'}, {'H', '3'}, {'H', '4'},{'H', '5'}, {'H', '6'}, {'H',
 //              27{'C', '2'}, 28{'C', '3'}, 29{'C', '4'},2A{'C', '5'}, 2B{'C', '6'}, 2C{'C', '7'},2D{'C', '8'}, 2E{'C', '9'}, 2F{'C', 'T'}, 30{'C', 'J'}, 31{'C', 'Q'}, 32{'C', 'K'}, 33{'C', 'A'}}};
 
 /***************************************************************************************************************************/
-int probabilities[10] = {5000, 4200, 400, 200, 39, 14, 2, 0, 0};//probability of getting a combination
-int stronger_probabilities[10] = {5000, 800, 330, 120, 80, 60, 45, 43, 40, 40};//the probability that the player has a better hand
+// int probabilities[10] = {5000, 4200, 400, 200, 39, 14, 2, 0, 0};                //probability of getting a combination
+int stronger_probabilities[10] = {5000, 800, 330, 120, 80, 60, 45, 43, 40, 40}; //the probability that the player has a better hand
 
 /***************************************************************************************************************************/
-void delay(int num)     //delay for display
-{
-    for(int i = 0; i < num; i++)
-    {
-        int a = 0;
-    }
-}
+// void delay(int num)     //delay for display
+// {
+//     for(int i = 0; i < num; i++)
+//     {
+//         int a = 0;
+//     }
+// }
 /***************************************************************************************************************************/
 void analysis() {       //analysis of card combinations
     COMB1 = 0, COMB2 = 0;
@@ -422,7 +422,7 @@ int prob_raise[6] = {0}; //the probability that the bot will increase bid
 int pointer_raise = 0;
 int prob_fold; //the probability that the bot will fold
 
-void bot_first(int bot_stronger_prob)//logic for bot
+void bot_logic(int bot_stronger_prob)//logic for bot
 {
     if(BID_PLAYER > BID_BOT)//IF raise THEN call
     {
@@ -445,7 +445,7 @@ void bot_first(int bot_stronger_prob)//logic for bot
         }
     }
     change_move_pl
-    delay(5);
+    // delay(5);
     delete_points
     return;
 }
@@ -471,9 +471,9 @@ void one_round(int bot_stronger_prob)
             delete_points
             if(COMMAND == 4 && BID_PLAYER >= BID_BOT) //IF check THEN
             {
-                delay(2);
+                // delay(2);
                 change_move_bot
-                bot_first(bot_stronger_prob);
+                bot_logic(bot_stronger_prob);
                 if(BID_BOT > BID_PLAYER)
                 {
                     continue;
@@ -484,7 +484,7 @@ void one_round(int bot_stronger_prob)
             {
                 if(raise_count < 7) //we can raise only if raise_count < 7
                 {
-                    delay(2);
+                    // delay(2);
                     change_move_bot
                     BALANCE_PLAYER -= BID_COMMAND;
                     BID_PLAYER += BID_COMMAND;
@@ -498,17 +498,17 @@ void one_round(int bot_stronger_prob)
                         else if(COMB1 == 2)
                             bot_stronger_prob += 1000; //after 6 raise
                     }
-                    bot_first(bot_stronger_prob);
+                    bot_logic(bot_stronger_prob);
                 }
             }
             else if(COMMAND == 2 &&  BID_PLAYER < BID_BOT) //IF call THEN
             {
-                delay(2);
+                // delay(2);
                 change_move_bot
                 int diff = BID_BOT - BID_PLAYER;
                 BALANCE_PLAYER -= diff;
                 BID_PLAYER = BID_BOT;
-                bot_first(bot_stronger_prob);
+                bot_logic(bot_stronger_prob);
             }
             else if(COMMAND == 1) //IF fold THEN
             {
@@ -525,13 +525,13 @@ void one_round(int bot_stronger_prob)
             if(ROUND == 1)
             {
                 print_four_card_pl
-                delay(5);
+                // delay(5);
                 delete_points
             }
             else
             {
                 print_five_card_pl
-                delay(5);
+                // delay(5);
                 delete_points
             }
             ROUND++;
@@ -567,7 +567,7 @@ void one_round(int bot_stronger_prob)
     if(WHO_WIN == 2) //if the player wins
     {
         print_bot_card
-        delay(5);
+        // delay(5);
         delete_points
         BALANCE_PLAYER += BID_BOT;
         BALANCE_PLAYER += BID_PLAYER;
@@ -579,7 +579,7 @@ void one_round(int bot_stronger_prob)
     else if(WHO_WIN == 1)//if the bot wins
     {
         print_bot_card
-        delay(5);
+        // delay(5);
         delete_points
         BALANCE_BOT += BID_BOT;
         BALANCE_BOT += BID_PLAYER;
@@ -592,7 +592,7 @@ void one_round(int bot_stronger_prob)
 }
 
 /***************************************************************************************************************************/
-            //this block is necessary to display the maps we need
+            //this block is necessary to display the cards we need
 int hand_iteration;
 void insert_seq_player(int num1, int num2)
 {
@@ -698,7 +698,6 @@ int main(){     //main function
         BALANCE_PLAYER -= BID_PLAYER;
 
         generate_cards();
-
         hand_iteration = 0;
         insert_seq_player(17, 24);
         insert_seq_bot(13, 20);
@@ -722,6 +721,8 @@ int main(){     //main function
             suit_iter++;
         }
         prob_fold = SUIT_VALUE[6]&1;
+        int bot_stronger_prob = stronger_probabilities[COMB1];//probability that the player will have a better combination
+
 
         ROUND = 1;  
 
@@ -729,10 +730,9 @@ int main(){     //main function
         
         
         three_card_pl
-        delay(10);
+        // delay(10);
         delete_points
 
-        int bot_stronger_prob = stronger_probabilities[COMB1];//probability that the player will have a better combination
         one_round(bot_stronger_prob);
         BID_BOT = 0;
         BID_PLAYER = 0;
