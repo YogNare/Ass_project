@@ -2441,15 +2441,15 @@ __LBB6_6:                               #   in Loop: Header=BB6_1 Depth=1
 	and r1, r0, r1
 	ldi	r2, prob_fold
 	stw	r2, r1
-	ldi	r1, COMB1
-	ldw	r1, r1
-	shl	r1, r1, 1
-	ldi	r2, stronger_probabilities
-	ldw	r1, r2, r1
-	ssw	r1, -10
 	ldi	r1, ROUND
 	stw	r1, r0
 	jsr	analysis
+	ldi	r0, COMB1
+	ldw	r0, r0
+	shl	r0, r0, 1
+	ldi	r1, stronger_probabilities
+	ldw	r0, r1, r0
+	ssw	r0, -10
 	ldi	r2, SEQUENCE_PTR
 	ldi	r0, -16384
 	stw	r2, r0

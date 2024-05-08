@@ -721,13 +721,12 @@ int main(){     //main function
             suit_iter++;
         }
         prob_fold = SUIT_VALUE[6]&1;
-        int bot_stronger_prob = stronger_probabilities[COMB1];//probability that the player will have a better combination
-
-
+    
         ROUND = 1;  
 
         analysis();
         
+        int bot_stronger_prob = stronger_probabilities[COMB1];//probability that the player will have a better combination
         
         three_card_pl
         // delay(10);

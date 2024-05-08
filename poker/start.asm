@@ -10,6 +10,10 @@ asect 0xfc00
 RD_WR> 
 #0 - cp is working
 #1 - cp stopped
+#2 - balance player
+#3 - pl's bid
+#4 - bot's balance
+#5 - bot's bid
 dc 0
 
 asect 0xfc02
