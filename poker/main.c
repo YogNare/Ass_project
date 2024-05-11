@@ -691,11 +691,7 @@ int main(){     //main function
     int suit_iter = 0;
     for(int i = 0; i < 3; i++)
     {
-        FOLD = 0;   
-        BID_BOT = 5;        //set the initial the bot's bid
-        BID_PLAYER = 10;    //set the initial the player's bid
-        BALANCE_BOT -= BID_BOT;
-        BALANCE_PLAYER -= BID_PLAYER;
+        FOLD = 0;  
 
         generate_cards();
         hand_iteration = 0;
@@ -723,6 +719,13 @@ int main(){     //main function
         prob_fold = SUIT_VALUE[6]&1;
     
         ROUND = 1;  
+
+ 
+        BID_BOT = 5;        //set the initial the bot's bid
+        BID_PLAYER = 10;    //set the initial the player's bid
+        BALANCE_BOT -= BID_BOT;
+        BALANCE_PLAYER -= BID_PLAYER;
+
 
         analysis();
         

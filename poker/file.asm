@@ -1311,8 +1311,8 @@ __LBB1_3:                               #   in Loop: Header=BB1_1 Depth=1
 	ldi	r2, SUIT_VALUE
 	ldw	r0, r2, r0
 	shl	r0, r2, 1
-	ldi	r5, dare
-	ldi	r0, dare+1
+	ldi	r5, deck
+	ldi	r0, deck+1
 	ldb	r2, r0, r6
 	ldi	r0, hand1+1
 	stb	r3, r0, r6
@@ -1337,8 +1337,8 @@ __LBB1_4:                               #   in Loop: Header=BB1_1 Depth=1
 	ldi	r2, SUIT_VALUE
 	ldw	r0, r2, r0
 	shl	r0, r2, 1
-	ldi	r5, dare
-	ldi	r0, dare+1
+	ldi	r5, deck
+	ldi	r0, deck+1
 	ldb	r2, r0, r6
 	ldi	r0, hand2+1
 	stb	r3, r0, r6
@@ -2311,7 +2311,7 @@ main>                                   # -- Begin function main
 # %bb.0:
 	push	fp
 	ldsp	fp
-	addsp	-16
+	addsp	-20
 	ldi	r0, 0
 	ssw	r0, -2
 	ldi	r2, BALANCE_BOT
@@ -2333,22 +2333,6 @@ __LBB6_2:                               #   in Loop: Header=BB6_1 Depth=1
 	ldi	r1, FOLD
 	ldi	r0, 0
 	ssw	r0, -12                         # 2-byte Folded Spill
-	stw	r1, r0
-	ldi	r1, BID_BOT
-	ldi	r0, 5
-	stw	r1, r0
-	ldi	r0, BID_PLAYER
-	ldi	r2, 10
-	stw	r0, r2
-	ldw	r1, r3
-	ldi	r2, BALANCE_BOT
-	ldw	r2, r1
-	sub r1, r3, r1
-	stw	r2, r1
-	ldw	r0, r2
-	ldi	r1, BALANCE_PLAYER
-	ldw	r1, r0
-	sub r0, r2, r0
 	stw	r1, r0
 	jsr	generate_cards
 	lsw	r0, -12                         # 2-byte Folded Reload
@@ -2443,6 +2427,24 @@ __LBB6_6:                               #   in Loop: Header=BB6_1 Depth=1
 	stw	r2, r1
 	ldi	r1, ROUND
 	stw	r1, r0
+	ldi	r1, BID_BOT
+	ssw	r1, -20                         # 2-byte Folded Spill
+	ldi	r0, 5
+	stw	r1, r0
+	ldi	r0, BID_PLAYER
+	ssw	r0, -18                         # 2-byte Folded Spill
+	ldi	r2, 10
+	stw	r0, r2
+	ldw	r1, r3
+	ldi	r2, BALANCE_BOT
+	ldw	r2, r1
+	sub r1, r3, r1
+	stw	r2, r1
+	ldw	r0, r2
+	ldi	r1, BALANCE_PLAYER
+	ldw	r1, r0
+	sub r0, r2, r0
+	stw	r1, r0
 	jsr	analysis
 	ldi	r0, COMB1
 	ldw	r0, r0
@@ -2462,10 +2464,10 @@ __LBB6_6:                               #   in Loop: Header=BB6_1 Depth=1
 	stw	r1, r0
 	lsw	r0, -10
 	jsr	one_round
-	ldi	r1, BID_BOT
+	lsw	r2, -20                         # 2-byte Folded Reload
+	lsw	r1, -18                         # 2-byte Folded Reload
 	ldi	r0, 0
-	stw	r1, r0
-	ldi	r1, BID_PLAYER
+	stw	r2, r0
 	stw	r1, r0
 	br	__LBB6_7
 __LBB6_7:                               #   in Loop: Header=BB6_1 Depth=1
@@ -2509,12 +2511,12 @@ __LBB6_12:
 	br	__LBB6_13
 __LBB6_13:
 	ldi	r0, 0
-	addsp	16
+	addsp	20
 	pop	fp
 	rts
                                         # -- End function
 ### SECTION: .data
-dare>                                   # @dare
+deck>                                   # @deck
 	db	72                              # 0x48
 	db	50                              # 0x32
 	db	72                              # 0x48
