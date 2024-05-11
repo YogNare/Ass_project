@@ -18,7 +18,7 @@
 /***************************************************************************************************************************/
 extern volatile int SUIT_VALUE[30];     //30 random values
 extern volatile int RD_WR;              //memory cell responsible for stopping the processor
-// extern volatile int DARE[52];           
+// extern volatile int deck[52];           
 /***************************************************************************************************************************/
 extern volatile int COMB1; //Bot's cards combinations
 extern volatile int COMB2; //Player's cards combinations
@@ -57,7 +57,7 @@ extern volatile int WHO_WIN; //memory cell showing the winner
 extern volatile int HAND1[5];
 extern volatile int HAND2[5];
 /***************************************************************************************************************************/
-                            //card, hand and dare structures
+                            //card, hand and deck structures
 typedef struct Card{ 
     char suit;
     char value;
@@ -67,18 +67,18 @@ typedef struct Hand{
     Card cards[5];
 }Hand;
 
-//dare in c
-typedef struct dare_c{
+//deck in c
+typedef struct deck_c{
     Card cards[52];
-}dare_c;
+}deck_c;
 
 Hand hand1, hand2;      //hand1 - robot's hand, hand2 - player's hand
-dare_c dare = {{{'H', '2'}, {'H', '3'}, {'H', '4'},{'H', '5'}, {'H', '6'}, {'H', '7'},{'H', '8'}, {'H', '9'}, {'H', 'T'}, {'H', 'J'}, {'H', 'Q'}, {'H', 'K'}, {'H', 'A'},
+deck_c deck = {{{'H', '2'}, {'H', '3'}, {'H', '4'},{'H', '5'}, {'H', '6'}, {'H', '7'},{'H', '8'}, {'H', '9'}, {'H', 'T'}, {'H', 'J'}, {'H', 'Q'}, {'H', 'K'}, {'H', 'A'},
      /*13 - 25*/{'D', '2'}, {'D', '3'}, {'D', '4'},{'D', '5'}, {'D', '6'}, {'D', '7'},{'D', '8'}, {'D', '9'}, {'D', 'T'}, {'D', 'J'}, {'D', 'Q'}, {'D', 'K'}, {'D', 'A'},
      /*26 - 38*/{'S', '2'}, {'S', '3'}, {'S', '4'},{'S', '5'}, {'S', '6'}, {'S', '7'},{'S', '8'}, {'S', '9'}, {'S', 'T'}, {'S', 'J'}, {'S', 'Q'}, {'S', 'K'}, {'S', 'A'},
      /*39 - 51*/{'C', '2'}, {'C', '3'}, {'C', '4'},{'C', '5'}, {'C', '6'}, {'C', '7'},{'C', '8'}, {'C', '9'}, {'C', 'T'}, {'C', 'J'}, {'C', 'Q'}, {'C', 'K'}, {'C', 'A'}}};
 
-// dare_c dare = {{0{'H', '2'}, 1{'H', '3'}, 2{'H', '4'},3{'H', '5'}, 4{'H', '6'}, 5{'H', '7'},6{'H', '8'}, 7{'H', '9'}, 8{'H', 'T'}, 9{'H', 'J'}, A{'H', 'Q'}, B{'H', 'K'}, C{'H', 'A'},
+// deck_c deck = {{0{'H', '2'}, 1{'H', '3'}, 2{'H', '4'},3{'H', '5'}, 4{'H', '6'}, 5{'H', '7'},6{'H', '8'}, 7{'H', '9'}, 8{'H', 'T'}, 9{'H', 'J'}, A{'H', 'Q'}, B{'H', 'K'}, C{'H', 'A'},
 //              D{'D', '2'}, E{'D', '3'}, F{'D', '4'},10{'D', '5'}, 11{'D', '6'}, 12{'D', '7'},13{'D', '8'}, 14{'D', '9'}, 15{'D', 'T'}, 16{'D', 'J'}, 17{'D', 'Q'}, 18{'D', 'K'}, 19{'D', 'A'},
 //              1A{'S', '2'}, 1B{'S', '3'}, 1C{'S', '4'},1D{'S', '5'}, 1E{'S', '6'}, 1F{'S', '7'},20{'S', '8'}, 21{'S', '9'}, 22{'S', 'T'}, 23{'S', 'J'}, 24{'S', 'Q'}, 25{'S', 'K'}, 26{'S', 'A'},
 //              27{'C', '2'}, 28{'C', '3'}, 29{'C', '4'},2A{'C', '5'}, 2B{'C', '6'}, 2C{'C', '7'},2D{'C', '8'}, 2E{'C', '9'}, 2F{'C', 'T'}, 30{'C', 'J'}, 31{'C', 'Q'}, 32{'C', 'K'}, 33{'C', 'A'}}};
@@ -403,13 +403,13 @@ void generate_cards()//generate cards for hand1 and hand2
     {
         if(i < 5)
         {
-            hand1.cards[i] = dare.cards[SUIT_VALUE[card_one_round]];
+            hand1.cards[i] = deck.cards[SUIT_VALUE[card_one_round]];
             HAND1[i] = hand1.cards[i].value;
             card_one_round++;
         }
         else
         {
-            hand2.cards[count] = dare.cards[SUIT_VALUE[card_one_round]];
+            hand2.cards[count] = deck.cards[SUIT_VALUE[card_one_round]];
             HAND2[count] = hand2.cards[count].value;
             card_one_round++;
             count++;
