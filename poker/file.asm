@@ -2314,11 +2314,6 @@ main>                                   # -- Begin function main
 	addsp	-20
 	ldi	r0, 0
 	ssw	r0, -2
-	ldi	r2, BALANCE_BOT
-	ldi	r1, 2000
-	stw	r2, r1
-	ldi	r2, BALANCE_PLAYER
-	stw	r2, r1
 	ssw	r0, -4
 	ssw	r0, -6
 	br	__LBB6_1
@@ -2327,7 +2322,7 @@ __LBB6_1:                               # =>This Loop Header: Depth=1
 	lsw	r0, -6
 	ldi	r1, 2
 	cmp	r0, r1
-	bgt	__LBB6_8
+	bgt	__LBB6_10
 	br	__LBB6_2
 __LBB6_2:                               #   in Loop: Header=BB6_1 Depth=1
 	ldi	r1, FOLD
@@ -2420,13 +2415,25 @@ __LBB6_5:                               #   in Loop: Header=BB6_3 Depth=2
 	br	__LBB6_3
 __LBB6_6:                               #   in Loop: Header=BB6_1 Depth=1
 	ldi	r0, SUIT_VALUE+12
-	ldw	r0, r1
-	ldi	r0, 1
-	and r1, r0, r1
+	ldw	r0, r0
+	ldi	r1, 1
+	and r0, r1, r0
 	ldi	r2, prob_fold
-	stw	r2, r1
-	ldi	r1, ROUND
+	stw	r2, r0
+	ldi	r0, ROUND
+	stw	r0, r1
+	ldw	r0, r0
+	cmp	r0, r1
+	bne	__LBB6_8
+	br	__LBB6_7
+__LBB6_7:                               #   in Loop: Header=BB6_1 Depth=1
+	ldi	r1, BALANCE_BOT
+	ldi	r0, 2000
 	stw	r1, r0
+	ldi	r1, BALANCE_PLAYER
+	stw	r1, r0
+	br	__LBB6_8
+__LBB6_8:                               #   in Loop: Header=BB6_1 Depth=1
 	ldi	r1, BID_BOT
 	ssw	r1, -20                         # 2-byte Folded Spill
 	ldi	r0, 5
@@ -2469,47 +2476,47 @@ __LBB6_6:                               #   in Loop: Header=BB6_1 Depth=1
 	ldi	r0, 0
 	stw	r2, r0
 	stw	r1, r0
-	br	__LBB6_7
-__LBB6_7:                               #   in Loop: Header=BB6_1 Depth=1
+	br	__LBB6_9
+__LBB6_9:                               #   in Loop: Header=BB6_1 Depth=1
 	lsw	r0, -6
 	add	r0, 1
 	ssw	r0, -6
 	br	__LBB6_1
-__LBB6_8:
-	ldi	r0, BALANCE_BOT
-	ldw	r0, r0
-	ldi	r1, BALANCE_PLAYER
-	ldw	r1, r1
-	cmp	r0, r1
-	ble	__LBB6_10
-	br	__LBB6_9
-__LBB6_9:
-	ldi	r1, SEQUENCE_PTR
-	ldi	r0, -10752
-	stw	r1, r0
-	ldi	r1, SEQUENCE_LEN
-	ldi	r0, 96
-	stw	r1, r0
-	br	__LBB6_13
 __LBB6_10:
 	ldi	r0, BALANCE_BOT
 	ldw	r0, r0
 	ldi	r1, BALANCE_PLAYER
 	ldw	r1, r1
 	cmp	r0, r1
-	bge	__LBB6_12
+	ble	__LBB6_12
 	br	__LBB6_11
 __LBB6_11:
+	ldi	r1, SEQUENCE_PTR
+	ldi	r0, -10752
+	stw	r1, r0
+	ldi	r1, SEQUENCE_LEN
+	ldi	r0, 96
+	stw	r1, r0
+	br	__LBB6_15
+__LBB6_12:
+	ldi	r0, BALANCE_BOT
+	ldw	r0, r0
+	ldi	r1, BALANCE_PLAYER
+	ldw	r1, r1
+	cmp	r0, r1
+	bge	__LBB6_14
+	br	__LBB6_13
+__LBB6_13:
 	ldi	r1, SEQUENCE_PTR
 	ldi	r0, -10496
 	stw	r1, r0
 	ldi	r1, SEQUENCE_LEN
 	ldi	r0, 88
 	stw	r1, r0
-	br	__LBB6_12
-__LBB6_12:
-	br	__LBB6_13
-__LBB6_13:
+	br	__LBB6_14
+__LBB6_14:
+	br	__LBB6_15
+__LBB6_15:
 	ldi	r0, 0
 	addsp	20
 	pop	fp

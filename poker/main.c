@@ -685,9 +685,7 @@ void insert_seq_bot(int num1, int num2)
 /***************************************************************************************************************************/
 
 int main(){     //main function
-    //set the initial balance
-    BALANCE_BOT = 2000;      
-    BALANCE_PLAYER = 2000;   
+    //set the initial balance 
     int suit_iter = 0;
     for(int i = 0; i < 3; i++)
     {
@@ -720,6 +718,11 @@ int main(){     //main function
     
         ROUND = 1;  
 
+        if (ROUND == 1)
+        {
+            BALANCE_BOT = 2000;      
+            BALANCE_PLAYER = 2000;  
+        }
  
         BID_BOT = 5;        //set the initial the bot's bid
         BID_PLAYER = 10;    //set the initial the player's bid
