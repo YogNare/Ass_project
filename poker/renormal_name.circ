@@ -200,6 +200,7 @@
     <wire from="(2020,610)" to="(2020,800)"/>
     <wire from="(2020,210)" to="(2020,400)"/>
     <wire from="(920,360)" to="(940,360)"/>
+    <wire from="(1680,1430)" to="(1760,1430)"/>
     <wire from="(1910,720)" to="(1920,720)"/>
     <wire from="(200,810)" to="(200,850)"/>
     <wire from="(1630,520)" to="(1640,520)"/>
@@ -506,12 +507,6 @@
     <comp loc="(100,370)" name="Commands"/>
     <comp loc="(670,870)" name="interface"/>
     <comp lib="0" loc="(440,580)" name="Pull Resistor"/>
-    <comp lib="0" loc="(1760,1420)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="16"/>
-      <a name="label" val="data_bus"/>
-      <a name="labelfont" val="SansSerif plain 9"/>
-    </comp>
     <comp lib="0" loc="(1960,260)" name="Probe">
       <a name="facing" val="south"/>
       <a name="radix" val="10unsigned"/>
@@ -581,7 +576,7 @@
     </comp>
     <comp lib="0" loc="(1940,1360)" name="Tunnel">
       <a name="facing" val="south"/>
-      <a name="label" val="sp_break"/>
+      <a name="label" val="sp_break_1"/>
       <a name="labelfont" val="SansSerif plain 9"/>
     </comp>
     <comp lib="0" loc="(700,680)" name="Tunnel">
@@ -600,7 +595,7 @@
       <a name="labelfont" val="SansSerif plain 9"/>
     </comp>
     <comp lib="0" loc="(1790,1350)" name="Tunnel">
-      <a name="label" val="sp_break"/>
+      <a name="label" val="sp_break_1"/>
       <a name="labelfont" val="SansSerif plain 9"/>
     </comp>
     <comp lib="0" loc="(560,420)" name="Tunnel">
@@ -1028,6 +1023,12 @@
     <comp lib="4" loc="(1710,300)" name="Register">
       <a name="width" val="16"/>
     </comp>
+    <comp lib="0" loc="(1680,1430)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="16"/>
+      <a name="label" val="data_bus"/>
+      <a name="labelfont" val="SansSerif plain 9"/>
+    </comp>
     <comp lib="0" loc="(450,720)" name="Tunnel">
       <a name="label" val="break"/>
       <a name="labelfont" val="SansSerif plain 9"/>
@@ -1294,6 +1295,10 @@
     </comp>
     <comp lib="6" loc="(1669,637)" name="Text">
       <a name="text" val="bot's bid"/>
+    </comp>
+    <comp lib="0" loc="(1760,1420)" name="Constant">
+      <a name="width" val="8"/>
+      <a name="value" val="0x37"/>
     </comp>
     <comp lib="0" loc="(460,850)" name="Tunnel">
       <a name="facing" val="south"/>
@@ -6501,7 +6506,7 @@ e2 94 80 e2 94 80 e2 94
       <circ-port height="8" pin="590,550" width="8" x="96" y="66"/>
       <circ-port height="8" pin="590,590" width="8" x="96" y="76"/>
       <circ-port height="8" pin="590,630" width="8" x="96" y="86"/>
-      <circ-port height="8" pin="190,680" width="8" x="96" y="106"/>
+      <circ-port height="8" pin="190,680" width="8" x="96" y="116"/>
       <circ-port height="8" pin="190,740" width="8" x="96" y="126"/>
       <circ-port height="8" pin="190,790" width="8" x="106" y="136"/>
       <circ-port height="10" pin="730,270" width="10" x="95" y="35"/>
@@ -6509,6 +6514,7 @@ e2 94 80 e2 94 80 e2 94
       <circ-port height="10" pin="320,500" width="10" x="125" y="35"/>
       <circ-port height="10" pin="730,600" width="10" x="125" y="135"/>
       <circ-port height="8" pin="100,480" width="8" x="96" y="96"/>
+      <circ-port height="8" pin="170,390" width="8" x="96" y="106"/>
       <circ-anchor facing="east" height="6" width="6" x="127" y="87"/>
     </appear>
     <wire from="(680,140)" to="(680,150)"/>
@@ -6652,6 +6658,11 @@ e2 94 80 e2 94 80 e2 94
       <a name="label" val="tag_1"/>
       <a name="labelloc" val="east"/>
     </comp>
+    <comp lib="0" loc="(170,390)" name="Pin">
+      <a name="width" val="8"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="break_point"/>
+    </comp>
     <comp lib="0" loc="(600,270)" name="Constant">
       <a name="width" val="16"/>
       <a name="value" val="0x0"/>
@@ -6685,10 +6696,6 @@ e2 94 80 e2 94 80 e2 94
       <a name="facing" val="north"/>
       <a name="label" val="aaaa"/>
       <a name="labelfont" val="SansSerif plain 9"/>
-    </comp>
-    <comp lib="0" loc="(170,390)" name="Constant">
-      <a name="width" val="8"/>
-      <a name="value" val="0x37"/>
     </comp>
     <comp lib="0" loc="(270,380)" name="Transistor">
       <a name="type" val="n"/>
