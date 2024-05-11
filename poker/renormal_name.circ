@@ -225,6 +225,7 @@
     <wire from="(1620,680)" to="(1620,700)"/>
     <wire from="(320,930)" to="(620,930)"/>
     <wire from="(1680,260)" to="(1680,270)"/>
+    <wire from="(1710,1410)" to="(1760,1410)"/>
     <wire from="(1620,680)" to="(1670,680)"/>
     <wire from="(180,760)" to="(180,780)"/>
     <wire from="(120,710)" to="(160,710)"/>
@@ -505,6 +506,12 @@
     <comp loc="(100,370)" name="Commands"/>
     <comp loc="(670,870)" name="interface"/>
     <comp lib="0" loc="(440,580)" name="Pull Resistor"/>
+    <comp lib="0" loc="(1760,1420)" name="Tunnel">
+      <a name="facing" val="east"/>
+      <a name="width" val="16"/>
+      <a name="label" val="data_bus"/>
+      <a name="labelfont" val="SansSerif plain 9"/>
+    </comp>
     <comp lib="0" loc="(1960,260)" name="Probe">
       <a name="facing" val="south"/>
       <a name="radix" val="10unsigned"/>
@@ -517,6 +524,10 @@
     <comp lib="0" loc="(1600,570)" name="Constant">
       <a name="width" val="16"/>
       <a name="value" val="0xfc04"/>
+    </comp>
+    <comp lib="0" loc="(1710,1410)" name="Constant">
+      <a name="width" val="16"/>
+      <a name="value" val="0xfc0c"/>
     </comp>
     <comp lib="0" loc="(570,710)" name="Tunnel">
       <a name="facing" val="east"/>
@@ -1525,12 +1536,6 @@
     <comp lib="0" loc="(510,600)" name="Transistor">
       <a name="type" val="n"/>
       <a name="width" val="16"/>
-    </comp>
-    <comp lib="0" loc="(1760,1420)" name="Tunnel">
-      <a name="facing" val="east"/>
-      <a name="width" val="16"/>
-      <a name="label" val="data_bus"/>
-      <a name="labelfont" val="SansSerif plain 9"/>
     </comp>
     <comp lib="1" loc="(340,540)" name="AND Gate">
       <a name="size" val="30"/>
@@ -6503,6 +6508,7 @@ e2 94 80 e2 94 80 e2 94
       <circ-port height="10" pin="910,480" width="10" x="125" y="85"/>
       <circ-port height="10" pin="320,500" width="10" x="125" y="35"/>
       <circ-port height="10" pin="730,600" width="10" x="125" y="135"/>
+      <circ-port height="8" pin="100,480" width="8" x="96" y="96"/>
       <circ-anchor facing="east" height="6" width="6" x="127" y="87"/>
     </appear>
     <wire from="(680,140)" to="(680,150)"/>
@@ -6536,6 +6542,7 @@ e2 94 80 e2 94 80 e2 94
     <wire from="(320,460)" to="(330,460)"/>
     <wire from="(220,380)" to="(230,380)"/>
     <wire from="(770,150)" to="(770,210)"/>
+    <wire from="(100,480)" to="(110,480)"/>
     <wire from="(900,520)" to="(910,520)"/>
     <wire from="(720,560)" to="(730,560)"/>
     <wire from="(580,200)" to="(590,200)"/>
@@ -6547,6 +6554,7 @@ e2 94 80 e2 94 80 e2 94
     <wire from="(640,570)" to="(640,580)"/>
     <wire from="(490,220)" to="(490,350)"/>
     <wire from="(900,570)" to="(900,580)"/>
+    <wire from="(110,460)" to="(110,480)"/>
     <wire from="(200,430)" to="(200,450)"/>
     <wire from="(200,450)" to="(200,470)"/>
     <wire from="(230,360)" to="(230,380)"/>
@@ -6566,6 +6574,7 @@ e2 94 80 e2 94 80 e2 94
     <wire from="(270,380)" to="(280,380)"/>
     <wire from="(310,460)" to="(320,460)"/>
     <wire from="(210,380)" to="(220,380)"/>
+    <wire from="(110,460)" to="(120,460)"/>
     <wire from="(290,380)" to="(290,440)"/>
     <wire from="(910,520)" to="(920,520)"/>
     <wire from="(590,200)" to="(590,250)"/>
@@ -6826,10 +6835,6 @@ e2 94 80 e2 94 80 e2 94
       <a name="tristate" val="false"/>
       <a name="label" val="4_num"/>
     </comp>
-    <comp lib="0" loc="(120,460)" name="Constant">
-      <a name="width" val="16"/>
-      <a name="value" val="0xfc0c"/>
-    </comp>
     <comp lib="0" loc="(190,790)" name="Pin">
       <a name="tristate" val="false"/>
       <a name="label" val="clock"/>
@@ -6858,6 +6863,11 @@ e2 94 80 e2 94 80 e2 94
       <a name="width" val="16"/>
       <a name="label" val="address_bus"/>
       <a name="labelfont" val="SansSerif plain 9"/>
+    </comp>
+    <comp lib="0" loc="(100,480)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="tristate" val="false"/>
+      <a name="label" val="start_add"/>
     </comp>
     <comp lib="0" loc="(730,120)" name="Tunnel">
       <a name="facing" val="south"/>
