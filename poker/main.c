@@ -720,11 +720,9 @@ int main(){     //main function
 
         if (ROUND == 1)
         {
-            RD_WR = 1;
             BALANCE_BOT = 2000;      
             BALANCE_PLAYER = 2000;  
         }
-        RD_WR = 1;
         BID_BOT = 5;        //set the initial the bot's bid
         BID_PLAYER = 10;    //set the initial the player's bid
         BALANCE_BOT -= BID_BOT;

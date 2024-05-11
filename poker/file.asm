@@ -2427,9 +2427,6 @@ __LBB6_6:                               #   in Loop: Header=BB6_1 Depth=1
 	bne	__LBB6_8
 	br	__LBB6_7
 __LBB6_7:                               #   in Loop: Header=BB6_1 Depth=1
-	ldi	r1, RD_WR
-	ldi	r0, 1
-	stw	r1, r0
 	ldi	r1, BALANCE_BOT
 	ldi	r0, 2000
 	stw	r1, r0
@@ -2437,9 +2434,6 @@ __LBB6_7:                               #   in Loop: Header=BB6_1 Depth=1
 	stw	r1, r0
 	br	__LBB6_8
 __LBB6_8:                               #   in Loop: Header=BB6_1 Depth=1
-	ldi	r1, RD_WR
-	ldi	r0, 1
-	stw	r1, r0
 	ldi	r1, BID_BOT
 	ssw	r1, -20                         # 2-byte Folded Spill
 	ldi	r0, 5
