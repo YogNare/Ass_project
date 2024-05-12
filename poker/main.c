@@ -15,6 +15,9 @@
 #define delete_cards SEQUENCE_PTR = 0xd300; SEQUENCE_LEN = 330;    //remove all cards occurencess
 #define final_win_bot SEQUENCE_PTR = 0xd600; SEQUENCE_LEN = 96;    //display final bot victory
 #define final_win_pl SEQUENCE_PTR = 0xd700; SEQUENCE_LEN = 88;     //display final player victory
+#define clear_num_pl SEQUENCE_PTR = 0xa000; SEQUENCE_LEN = 88;
+#define clear_num_bot SEQUENCE_PTR = 0xa100; SEQUENCE_LEN = 78;
+
 /***************************************************************************************************************************/
 extern volatile int SUIT_VALUE[30];     //30 random values
 extern volatile int RD_WR;              //memory cell responsible for stopping the processor
@@ -30,6 +33,11 @@ extern volatile int BALANCE_BOT;    //bot's balance
 extern volatile int BALANCE_PLAYER; //player's balance
 extern volatile int BID_BOT;        //bot's bid
 extern volatile int BID_PLAYER;     //player's bid
+
+extern volatile int DISPLAY_BALANCE_BOT;    //bot's balance to display
+extern volatile int DISPLAY_BALANCE_PL; //player's balance to display
+extern volatile int DISPLAY_BID_BOT;        //bot's bid to display
+extern volatile int DISPLAY_BID_PL;     //player's bid to display
 /***************************************************************************************************************************/
 extern volatile int FOLD;  //1 - if bot fold, 2 - if player fold
 /***************************************************************************************************************************/
@@ -88,13 +96,28 @@ deck_c deck = {{{'H', '2'}, {'H', '3'}, {'H', '4'},{'H', '5'}, {'H', '6'}, {'H',
 int stronger_probabilities[10] = {5000, 800, 330, 120, 80, 60, 45, 43, 40, 40}; //the probability that the player has a better hand
 
 /***************************************************************************************************************************/
-// void delay(int num)     //delay for display
-// {
-//     for(int i = 0; i < num; i++)
-//     {
-//         int a = 0;
-//     }
-// }
+void delay(int num)     //delay for display
+{
+    for(int i = 0; i < num; i++)
+    {
+        int a = 0;
+    }
+}
+/***************************************************************************************************************************/
+void display_num()
+{
+    clear_num_pl
+    clear_num_bot
+    DISPLAY_BALANCE_BOT = BALANCE_BOT;
+    delay(5);
+    DISPLAY_BALANCE_PL = BALANCE_PLAYER;
+    delay(5);
+    DISPLAY_BID_BOT = BID_BOT;
+    delay(5);
+    DISPLAY_BID_PL = BID_PLAYER;
+    delay(5);
+}
+
 /***************************************************************************************************************************/
 void analysis() {       //analysis of card combinations
     COMB1 = 0, COMB2 = 0;
@@ -444,6 +467,7 @@ void bot_logic(int bot_stronger_prob)//logic for bot
             
         }
     }
+    display_num();
     change_move_pl
     // delay(5);
     delete_points
@@ -498,6 +522,7 @@ void one_round(int bot_stronger_prob)
                         else if(COMB1 == 2)
                             bot_stronger_prob += 1000; //after 6 raise
                     }
+                    display_num();
                     bot_logic(bot_stronger_prob);
                 }
             }
@@ -508,6 +533,7 @@ void one_round(int bot_stronger_prob)
                 int diff = BID_BOT - BID_PLAYER;
                 BALANCE_PLAYER -= diff;
                 BID_PLAYER = BID_BOT;
+                display_num();
                 bot_logic(bot_stronger_prob);
             }
             else if(COMMAND == 1) //IF fold THEN
@@ -571,6 +597,7 @@ void one_round(int bot_stronger_prob)
         delete_points
         BALANCE_PLAYER += BID_BOT;
         BALANCE_PLAYER += BID_PLAYER;
+        display_num();
         win_player
         RD_WR = 1;
         delete_winner
@@ -583,6 +610,7 @@ void one_round(int bot_stronger_prob)
         delete_points
         BALANCE_BOT += BID_BOT;
         BALANCE_BOT += BID_PLAYER;
+        display_num();
         win_bot
         RD_WR = 1;
         delete_winner
@@ -686,6 +714,8 @@ void insert_seq_bot(int num1, int num2)
 
 int main(){     //main function
     //set the initial balance 
+    BALANCE_BOT = 2000;    
+    BALANCE_PLAYER = 2000;  
     int suit_iter = 0;
     for(int i = 0; i < 3; i++)
     {
@@ -718,16 +748,11 @@ int main(){     //main function
     
         ROUND = 1;  
 
-        if (ROUND == 1)
-        {
-            BALANCE_BOT = 2000;    
-            BALANCE_PLAYER = 2000;  
-        }
         BID_BOT = 5;        //set the initial the bot's bid
         BID_PLAYER = 10;    //set the initial the player's bid
         BALANCE_BOT -= BID_BOT;
         BALANCE_PLAYER -= BID_PLAYER;
-
+        display_num();
 
         analysis();
         
@@ -740,6 +765,7 @@ int main(){     //main function
         one_round(bot_stronger_prob);
         BID_BOT = 0;
         BID_PLAYER = 0;
+        // display_num();
     }
 
     if(BALANCE_BOT > BALANCE_PLAYER) //if bot win
